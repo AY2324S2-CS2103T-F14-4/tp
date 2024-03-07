@@ -11,44 +11,44 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
-### John Doe
+### Sindhura Rajiv Jain
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/sindhurajain.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
+[[github](https://github.com/sindhurajain)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Project Advisor
-
-### Jane Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
-
-* Role: Team Lead
+* Role: Scheduling and Tracking & Deliverables and Deadlines
 * Responsibilities: UI
 
-### Johnny Doe
+### Neo Tahnya
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/tahnya.png" width="200px">
 
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
-
-* Role: Developer
-* Responsibilities: Data
-
-### Jean Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)]
+[[github](http://github.com/tahnya)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Developer
-* Responsibilities: Dev Ops + Threading
+* Role: Documentation & Code Quality
+* Responsibilities: UI
+
+### Yap Xuan Xuan
+
+<img src="images/yapxuanxuan.png" width="200px">
+
+[[github](http://github.com/yapxuanxuan)] [[portfolio](team/johndoe.md)]
+
+* Role: Team Lead
+* Responsibilities: Data
+
+### Fang Ruoqing
+
+<img src="images/fangruoqing.png" width="200px">
+
+[[github](http://github.com/FangRuoqing)]
+[[portfolio](team/johndoe.md)]
+
+* Role: Testing
+* Responsibilities: Test
 
 ### James Doe
 
