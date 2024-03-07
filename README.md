@@ -9,6 +9,5 @@
   organises contact details, efficiently manages professional relationships
   and simplifies event and meeting planning. Designed for seamless usage via
   Command Line Interface (CLI), Connectify’s ease of use sets up computing
-  students for success. 
-
+  students for success.
 * This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
