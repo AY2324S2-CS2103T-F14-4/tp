@@ -123,6 +123,8 @@ public class EditCommand extends Command {
         private Email email;
         private Address address;
         private Priority priority;
+
+        private Boolean star;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -137,6 +139,7 @@ public class EditCommand extends Command {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setPriority(toCopy.priority);
+
             setTags(toCopy.tags);
         }
 
@@ -164,24 +167,25 @@ public class EditCommand extends Command {
         }
 
 
-    /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
-     */
-    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
-        assert personToEdit != null;
-      
-        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Company updatedCompany = personToEdit.getCompany();
-        Priority updatedPriority = personToEdit.getPriority();
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        /**
+         * Creates and returns a {@code Person} with the details of {@code personToEdit}
+         * edited with {@code editPersonDescriptor}.
+         */
+        private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
+            assert personToEdit != null;
 
-        return new Person(updatedName, updatedPhone, updatedEmail,
-                updatedAddress, updatedCompany, updatedPriority, updatedTags);
-    }
+            Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
+            Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
+            Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
+            Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+            Company updatedCompany = personToEdit.getCompany();
+            Priority updatedPriority = personToEdit.getPriority();
+            Boolean updatedStar = personToEdit.isStarred();
+            Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+
+            return new Person(updatedName, updatedPhone, updatedEmail,
+                    updatedAddress, updatedCompany, updatedPriority, updatedStar, updatedTags);
+        }
 
 
 
@@ -203,6 +207,14 @@ public class EditCommand extends Command {
 
         public void setPriority(Priority priority) {
             this.priority = priority;
+        }
+
+        public Optional<Boolean> isStarred() {
+            return Optional.ofNullable(star);
+        }
+
+        public void setStar(Boolean star) {
+            this.star = star;
         }
 
         public Optional<Priority> getPriority() {
