@@ -28,6 +28,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Priority;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -110,10 +111,14 @@ public class EditCommand extends Command {
         Meeting updatedMeeting = personToEdit.getMeeting();
         Boolean updatedStar = personToEdit.isStarred();
         Priority updatedPriority = personToEdit.getPriority();
+        Remark updatedRemark = personToEdit.getRemark();
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedCompany,
-                updatedMeeting, updatedPriority, updatedStar, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail,
+                updatedAddress, updatedCompany,
+                updatedMeeting, updatedPriority,
+                updatedStar, updatedRemark, updatedTags);
+
     }
 
     @Override

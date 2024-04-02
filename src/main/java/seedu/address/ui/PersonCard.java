@@ -48,6 +48,9 @@ public class PersonCard extends UiPart<Region> {
     private Label meeting;
     @FXML
     private Circle priorityDot;
+    @FXML
+    private Label remark;
+
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -63,8 +66,8 @@ public class PersonCard extends UiPart<Region> {
         }
 
         phone.setText(person.getPhone().value);
-        address.setText(person.getAddress().value);
-        email.setText(person.getEmail().value);
+        setAddress();
+        setEmail();
         setCompany();
         setMeeting();
 
@@ -76,6 +79,8 @@ public class PersonCard extends UiPart<Region> {
         } else {
             priorityDot.setVisible(false);
         }
+
+        setRemark();
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
@@ -87,6 +92,31 @@ public class PersonCard extends UiPart<Region> {
             company.setVisible(true);
         } else {
             company.setPrefHeight(0.0);
+        }
+    }
+
+    public void setAddress() {
+        if (person.getAddress().toString().equals("")) {
+            address.setText("[address]");
+        } else {
+            address.setText(person.getAddress().value);
+        }
+    }
+
+    public void setEmail() {
+        if (person.getEmail().toString().equals("")) {
+            email.setText("[email]");
+        } else {
+            email.setText(person.getEmail().value);
+        }
+    }
+
+    private void setRemark() {
+        if (person.getRemark().toString().equals("")) {
+            remark.setVisible(false);
+            remark.setManaged(false);
+        } else {
+            remark.setText(person.getRemark().value);
         }
     }
 

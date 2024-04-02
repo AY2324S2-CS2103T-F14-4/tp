@@ -12,6 +12,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Priority;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -27,6 +28,7 @@ public class PersonBuilder {
     public static final String DEFAULT_COMPANY = "";
     public static final String DEFAULT_PRIORITY = "high";
     public static final Boolean DEFAULT_STAR = false;
+    public static final String DEFAULT_REMARK = "She likes aardvarks.";
 
     private Name name;
     private Phone phone;
@@ -36,6 +38,7 @@ public class PersonBuilder {
     private Meeting meeting;
     private Priority priority;
     private Boolean starred;
+    private Remark remark;
     private Set<Tag> tags;
 
     /**
@@ -50,6 +53,7 @@ public class PersonBuilder {
         meeting = new Meeting("", "", "", "");
         priority = new Priority(DEFAULT_PRIORITY);
         starred = DEFAULT_STAR;
+        remark = new Remark(DEFAULT_REMARK);
         tags = new HashSet<>();
     }
 
@@ -65,6 +69,7 @@ public class PersonBuilder {
         meeting = personToCopy.getMeeting();
         priority = personToCopy.getPriority();
         starred = personToCopy.isStarred();
+        remark = personToCopy.getRemark();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -109,6 +114,15 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code Remark} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withRemark(String remark) {
+        this.remark = new Remark(remark);
+        return this;
+    }
+
+
+    /**
      * Sets the {@code Company} of the {@code Person} that we are building.
      */
     public PersonBuilder withCompany(String company) {
@@ -142,7 +156,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, company, meeting, priority, starred, tags);
+        return new Person(name, phone, email, address, company, meeting, priority, starred, remark, tags);
     }
 
 }

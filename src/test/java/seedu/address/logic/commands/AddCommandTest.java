@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -20,8 +21,10 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
 
@@ -42,6 +45,18 @@ public class AddCommandTest {
         assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
                 commandResult.getFeedbackToUser());
         assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+    }
+    @Test
+    public void execute_similarPersonAcceptedByModel_addSuccessful() throws Exception {
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Person validPerson = new PersonBuilder().build();
+        CommandResult initCommandResult = new AddCommand(validPerson).execute(model);
+        Person similarPerson = new PersonBuilder().withName("Amy  Bee").build();
+        CommandResult commandResult = new AddCommand(similarPerson).execute(model);
+
+        assertEquals(String.format(AddCommand.MESSAGE_WARN_POSSIBLE_DUPLICATE, similarPerson.getName().fullName,
+                        Messages.format(similarPerson)), commandResult.getFeedbackToUser());
+        assertTrue(model.hasPerson(similarPerson));
     }
 
     @Test

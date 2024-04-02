@@ -38,6 +38,8 @@ public class CommandTestUtil {
     public static final String VALID_COMPANY_BOB = "Google";
     public static final String VALID_PRIORITY_AMY = "high";
     public static final String VALID_PRIORITY_BOB = "med";
+    public static final String VALID_REMARK_AMY = "Like skiing.";
+    public static final String VALID_REMARK_BOB = "Favourite pastime: Eating";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
 

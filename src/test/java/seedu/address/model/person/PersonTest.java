@@ -43,12 +43,39 @@ public class PersonTest {
 
         // name differs in case, all other attributes same -> returns false
         Person editedBob = new PersonBuilder(BOB).withName(VALID_NAME_BOB.toLowerCase()).build();
-        assertFalse(BOB.isSamePerson(editedBob));
+        assertTrue(BOB.isSamePerson(editedBob));
 
         // name has trailing spaces, all other attributes same -> returns false
         String nameWithTrailingSpaces = VALID_NAME_BOB + " ";
         editedBob = new PersonBuilder(BOB).withName(nameWithTrailingSpaces).build();
         assertFalse(BOB.isSamePerson(editedBob));
+    }
+
+    @Test
+    public void isSimilarPerson() {
+        // same object -> returns true
+        assertTrue(ALICE.hasSimilarName(ALICE));
+
+        // null -> returns false
+        assertFalse(ALICE.hasSimilarName(null));
+
+        // same name, all other attributes different -> returns true
+        Person editedAlice = new PersonBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
+                .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
+        assertTrue(ALICE.hasSimilarName(editedAlice));
+
+        // different name, all other attributes same -> returns false
+        editedAlice = new PersonBuilder(ALICE).withName(VALID_NAME_BOB).build();
+        assertFalse(ALICE.hasSimilarName(editedAlice));
+
+        // name differs in case, all other attributes same -> returns true
+        Person editedBob = new PersonBuilder(BOB).withName(VALID_NAME_BOB.toLowerCase()).build();
+        assertTrue(BOB.hasSimilarName(editedBob));
+
+        // name has trailing spaces, all other attributes same -> returns true
+        String nameWithTrailingSpaces = VALID_NAME_BOB + " ";
+        editedBob = new PersonBuilder(BOB).withName(nameWithTrailingSpaces).build();
+        assertTrue(BOB.hasSimilarName(editedBob));
     }
 
     @Test
@@ -95,7 +122,7 @@ public class PersonTest {
         String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
                 + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress() + ", company=" + ALICE.getCompany()
                 + ", meeting=" + ALICE.getMeeting().toString() + ", priority=" + ALICE.getPriority() + ", starred="
-                + ALICE.isStarred() + ", tags=" + ALICE.getTags() + "}";
+                + ALICE.isStarred() + ", remark=" + ALICE.getRemark() + ", tags=" + ALICE.getTags() + "}";
         assertEquals(expected, ALICE.toString());
     }
 }
