@@ -142,7 +142,7 @@ public class EditCommandTest {
         // different types -> returns false
         assertFalse(standardCommand.equals(new ClearCommand()));
 
-        // different index -> returns false
+        // different contact name -> returns false
         assertFalse(standardCommand.equals(new EditCommand(VALID_NAME_BOB, DESC_AMY)));
 
         // different descriptor -> returns false
