@@ -115,7 +115,7 @@ public class Person {
     }
 
     /**
-     * Returns true if both persons have similar names.
+     * Returns true if both persons have similar names (same name but with trailing spaces).
      * This defines a weaker notion of equality between two persons.
      */
     public boolean hasSimilarName(Person otherPerson) {
