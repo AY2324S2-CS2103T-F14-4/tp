@@ -69,7 +69,8 @@ public class CompanyCommand extends Command {
         Person editedPerson = new Person(
                 personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), company, personToEdit.getMeeting(), personToEdit.getPriority(),
-                personToEdit.isStarred(), personToEdit.getTags());
+                personToEdit.isStarred(), personToEdit.getRemark(), personToEdit.getTags());
+
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 

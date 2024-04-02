@@ -20,6 +20,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Priority;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -49,9 +50,10 @@ public class AddCommandParser implements Parser<AddCommand> {
         Company company = new Company("");
         Meeting meeting = new Meeting("", "", "", "");
         Priority priority = new Priority("");
+        Remark remark = new Remark("");
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Person person = new Person(name, phone, email, address, company, meeting, priority, false, tagList);
+        Person person = new Person(name, phone, email, address, company, meeting, priority, false, remark, tagList);
 
         return new AddCommand(person);
     }

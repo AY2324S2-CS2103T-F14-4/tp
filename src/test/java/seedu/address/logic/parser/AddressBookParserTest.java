@@ -28,12 +28,14 @@ import seedu.address.logic.commands.FindCompanyCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.PriorityCommand;
+import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.StarCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.CompanyContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Priority;
+import seedu.address.model.person.Remark;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -147,6 +149,14 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_filterMedPriority() throws Exception {
         assertTrue(parser.parseCommand(FilterMedPriorityCommand.COMMAND_WORD) instanceof FilterMedPriorityCommand);
+    }
+
+    @Test
+    public void parseCommand_remark() throws Exception {
+        String testName = ALICE.getName().toString();
+        String userInput = RemarkCommand.COMMAND_WORD + " Alice Pauline r/remark";
+        RemarkCommand command = (RemarkCommand) parser.parseCommand(userInput);
+        assertEquals(new RemarkCommand(testName, new Remark("remark")), command);
     }
 
     @Test

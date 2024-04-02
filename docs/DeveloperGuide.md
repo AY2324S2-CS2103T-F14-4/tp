@@ -293,13 +293,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | user              | edit the details that I’ve added                                                                          | my application will contain the most updated and accurate information                |
 | `* * *`  | user              | list all my contacts                                                                                      | remember whom I’ve met at a glance                                                   |
 | `* * *`  | user              | delete a contact                                                                                          | only keep those that are necessary                                                   |
+| `* * *`  | user              | undo my most recently added entry                                                                         | quickly delete that entry if I had made a mistake                                    |
 | `* *`    | computing student | categorise the people I meet into interns, recruiters, alumni, students, professors, employees and others | remember the people whom I’ve met and easily find them again                         |
 | `* *`    | computing student | search a contact using key word                                                                           | find the contact quickly                                                             |
+| `* *`    | user              | add a meeting with my contact                                                                             | know when to meet with the conatct                                                   |
+| `* *`    | user              | find all meetings                                                                                         | know who I will be meeting with                                                      |
 | `* *`    | user              | differentiate which companies my professional contacts are from                                           | know which company I am connecting with                                              |
+| `* *`    | user              | find my contacts by company                                                                               | easily find the contacts from the company I want                                     |
 | `* *`    | computing student | assign priority levels to my contacts                                                                     | prioritise certain contacts in my network who would be more beneficial for my career |
 | `*`      | computing student | filter my contacts by priority                                                                            | identify high-priority contacts at a glance                                          |
 | `*`      | user              | have a "favourites" or "star" feature for important contacts                                              | easily access them without scrolling through the entire list                         |
 | `*`      | user              | know the number of contacts quickly                                                                       | get a sensing of how many people are in my network                                   |
+| `*`      | user              | unstar a contact                                                                                          |                                                                                      |
+| `*`      | user              | remove priority from a contact                                                                            |                                                                                      |
 
 
 ### Use cases
@@ -333,6 +339,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * Steps 1b1-1b2 are repeated until the data entered is correct.
 
       Use case resumes from step 2.
+  
+* 1c. Connectify detects a similar contact name in the entered contact name.
+
+    * 1c1. Connectify warns the user that there is existing contacts with similar names.
+
+      Use case resumes from step 2.
+        
 
 **Use case: Delete a contact**
 
@@ -396,12 +409,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes from step 2.
 
-* 1c. The contact information to be updated is unchanged from the original.
-
-    * 1c1. Connectify shows an error message.
-
-      Use case ends.
-
 **Use case: Categorize contacts**
 
 **MSS**
@@ -419,19 +426,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1a1. Connectify shows an error message.
 
       Use case resumes at step 1.
-
-* 1b. The contact already has an existing category
-
-    * 1b1. Connectify informs the user the category that the contact currently is under and requests for confirmation
-      to update the current category to the newly given one.
-    * 1b2a. User confirms the update.
-        * 1b2a1. Connectify updates the current category of the given contact to the new one.
-
-          Use Case ends
-    * 1b2b. User cancels the update.
-        * 1b2b1. Connectify does not update the information.
-
-          Use case ends.
 
 **Use case: Tag contacts with their company's name**
 
@@ -453,23 +447,41 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1b. The contact already has an existing company tag.
 
-    * 1b1. Connectify informs the user the company tag that the contact currently has and requests for confirmation
-      to update the current company tag to the newly given one.
-    * 1b2a. User confirms the update.
-      * 1b2a1. Connectify updates the current company tag of the given contact to the new one.
-      
+    * 1b1. Connectify warns the user about the existing company tag and updates the company tag to the new one.
+
         Use Case ends
-    * 1b2b. User cancels the update.
-      * 1b2b1. Connectify does not update the information.
 
-        Use case ends.
-
-**Use case: Assign priorities to contacts**
+**Use case: Add a meeting to a contact**
 
 **MSS**
 
-1.  User requests to assign a specific contact with low/medium/high priority
-2.  Connectify adds the given priority to the contact and displays the full updated contact information
+1.  User requests to add a meeting to a specific contact name.
+2.  Connectify adds the meeting details to the contact and displays the meeting details and the contact it has been added to.
+
+    Use case ends.
+
+**Extensions**
+
+
+* 1a. The given contact name is not in the contact list.
+
+    * 1a1. Connectify shows an error message.
+
+      Use case resumes at step 1.
+
+* 1b. The contact already has an existing meeting with the contact.
+
+    * 1b1. Connectify warns user about the existing meeting details and updates the current meeting
+      details to the new one.
+
+      Use case ends
+
+**Use case: Assign high or medium priority to a contact**
+
+**MSS**
+
+1.  User requests to assign medium or high priority to a specific contact name.
+2.  Connectify adds the given priority to the contact and displays the full updated contact information.
 
     Use case ends.
 
@@ -484,17 +496,33 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1b. The contact already has an existing priority label.
 
-    * 1b1. Connectify informs the user the priority label that the contact currently has and requests for confirmation
-      to update the current priority level to the newly given one.
-    * 1b2a. User confirms the update.
-        * 1b2a1. Connectify updates the current priority label of the given contact to the new one.
+    * 1b1. Connectify adds the priority level to the contact according to the new request and displays the full updated contact information.
 
-          Use Case ends
-    * 1b2b. User cancels the update.
-        * 1b2b1. Connectify does not update the information.
+        Use case ends.
 
-          Use case ends.
+**Use case: Remove priority from a contact**
 
+**MSS**
+
+1.  User requests to remove priority to a specific contact name.
+2.  Connectify removes priority from the contact and displays the full updated contact information.
+
+    Use case ends.
+
+**Extensions**
+
+
+* 1a. The given contact name is not in the contact list.
+
+    * 1a1. Connectify shows an error message.
+
+      Use case resumes at step 1.
+
+* 1b. The contact does not have an existing priority label.
+
+    * 1b1. Connectify again sets the priority level of the contact as none according to the new request and displays the full updated contact information.
+
+      Use case ends.
 
 ### Non-Functional Requirements
 

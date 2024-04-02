@@ -56,7 +56,7 @@ public class UnstarCommand extends Command {
         Person unstarredContact = new Person(contactToUnstar.getName(), contactToUnstar.getPhone(),
                 contactToUnstar.getEmail(), contactToUnstar.getAddress(), contactToUnstar.getCompany(),
                 contactToUnstar.getMeeting(), contactToUnstar.getPriority(), contactToUnstar.isStarred(),
-                contactToUnstar.getTags());
+                contactToUnstar.getRemark(), contactToUnstar.getTags());
 
         model.setPerson(contactToUnstar, unstarredContact);
         model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);

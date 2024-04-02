@@ -27,13 +27,15 @@ public class Person {
     private final Meeting meeting;
     private final Priority priority;
     private boolean starred;
+    private final Remark remark;
     private final Set<Tag> tags = new HashSet<>();
 
     /**
      * Name, phone, email, address, tags must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Company company,
-                  Meeting meeting, Priority priority, Boolean starred, Set<Tag> tags) {
+
+    public Person(Name name, Phone phone, Email email, Address address,
+                  Company company, Meeting meeting, Priority priority, Boolean starred, Remark remark, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
@@ -43,6 +45,7 @@ public class Person {
         this.meeting = meeting;
         this.priority = priority;
         this.starred = starred;
+        this.remark = remark;
         this.tags.addAll(tags);
     }
 
@@ -85,6 +88,11 @@ public class Person {
         return starred;
     }
 
+    public Remark getRemark() {
+        return remark;
+    }
+
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -103,7 +111,7 @@ public class Person {
         }
 
         return otherPerson != null
-                && otherPerson.getName().equals(getName());
+                && otherPerson.getName().fullName.equalsIgnoreCase(getName().fullName);
     }
 
     /**
@@ -114,9 +122,12 @@ public class Person {
         if (otherPerson == this) {
             return true;
         }
-
-        return otherPerson != null
-                && otherPerson.getName().fullName.contains(getName().fullName);
+        if (otherPerson == null) {
+            return false;
+        }
+        String otherPersonNameLowerCase = otherPerson.getName().fullName.replaceAll("\\s", "")
+                .toLowerCase();
+        return otherPersonNameLowerCase.contains(getName().fullName.replaceAll("\\s", "").toLowerCase());
     }
 
     /**
@@ -161,6 +172,7 @@ public class Person {
                 .add("meeting", meeting)
                 .add("priority", priority)
                 .add("starred", starred)
+                .add("remark", remark)
                 .add("tags", tags)
                 .toString();
     }

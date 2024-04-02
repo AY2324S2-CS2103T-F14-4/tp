@@ -71,6 +71,13 @@ public class AddressBookTest {
     }
 
     @Test
+    public void hasPerson_personInAddressBookDiffCase_returnsTrue() {
+        addressBook.addPerson(ALICE);
+        Person aliceDiffCasePerson = new PersonBuilder().withName("aLiCe pauLINE").build();
+        assertTrue(addressBook.hasPerson(aliceDiffCasePerson));
+    }
+
+    @Test
     public void hasPerson_personWithSameIdentityFieldsInAddressBook_returnsTrue() {
         addressBook.addPerson(ALICE);
         Person editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
