@@ -23,6 +23,14 @@ public class Priority {
         value = priorityLevel;
     }
 
+    /**
+     * Checks if the Person has priority.
+     * @return true if the value is not empty (has priority), false otherwise.
+     */
+    public boolean hasPriority() {
+        return !value.isEmpty();
+    }
+
     @Override
     public String toString() {
         return value;

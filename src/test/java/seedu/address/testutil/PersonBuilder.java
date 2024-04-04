@@ -3,13 +3,16 @@ package seedu.address.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.logic.parser.AddMeetingCommandParser;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Company;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Meeting;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Priority;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -25,14 +28,17 @@ public class PersonBuilder {
     public static final String DEFAULT_COMPANY = "";
     public static final String DEFAULT_PRIORITY = "high";
     public static final Boolean DEFAULT_STAR = false;
+    public static final String DEFAULT_REMARK = "She likes aardvarks.";
 
     private Name name;
     private Phone phone;
     private Email email;
     private Address address;
     private Company company;
+    private Meeting meeting;
     private Priority priority;
     private Boolean starred;
+    private Remark remark;
     private Set<Tag> tags;
 
     /**
@@ -44,8 +50,10 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         company = new Company(DEFAULT_COMPANY);
+        meeting = new Meeting("", "", "", "");
         priority = new Priority(DEFAULT_PRIORITY);
         starred = DEFAULT_STAR;
+        remark = new Remark(DEFAULT_REMARK);
         tags = new HashSet<>();
     }
 
@@ -58,8 +66,10 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         company = personToCopy.getCompany();
+        meeting = personToCopy.getMeeting();
         priority = personToCopy.getPriority();
         starred = personToCopy.isStarred();
+        remark = personToCopy.getRemark();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -104,10 +114,28 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code Remark} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withRemark(String remark) {
+        this.remark = new Remark(remark);
+        return this;
+    }
+
+
+    /**
      * Sets the {@code Company} of the {@code Person} that we are building.
      */
     public PersonBuilder withCompany(String company) {
         this.company = new Company(company);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Meeting} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withMeeting(String meeting) {
+        String[] details = AddMeetingCommandParser.parseDetails(meeting);
+        this.meeting = new Meeting(details[0], details[1], details[2], details[3]);
         return this;
     }
 
@@ -128,7 +156,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, company, priority, starred, tags);
+        return new Person(name, phone, email, address, company, meeting, priority, starred, remark, tags);
     }
 
 }

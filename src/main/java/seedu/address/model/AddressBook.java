@@ -64,7 +64,32 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean hasPerson(Person person) {
         requireNonNull(person);
-        return persons.contains(person);
+        int count = 0;
+        for (Person p : persons) {
+            if (p.getName().fullName.equalsIgnoreCase(person.getName().fullName)) {
+                count++;
+            }
+        }
+        return (count != 0);
+    }
+
+    /**
+     * Returns true if a person with the same contact name words as {@code name} exists in the address book.
+     */
+    public boolean hasSimilarPerson(Person person) {
+        requireNonNull(person);
+
+        // Remove spaces from the name
+        String name = person.getName().fullName.replaceAll("\\s", "").toLowerCase();
+
+        for (Person p : persons) {
+            // Remove spaces from the existing contact names for comparison
+            String existingName = p.getName().fullName.replaceAll("\\s", "").toLowerCase();
+            if (existingName.equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

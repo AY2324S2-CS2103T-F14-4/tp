@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,7 @@ public class CompanyCommandTest {
 
     @Test
     public void execute_addCompanyUnfilteredList_success() {
-        Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person firstPerson = model.getFilteredPersonList().get(INDEX_THIRD_PERSON.getZeroBased());
         Person editedPerson = new PersonBuilder(firstPerson).withCompany(COMPANY_STUB).build();
 
         CompanyCommand companyCommand = new CompanyCommand(editedPerson.getName().fullName,
@@ -74,8 +75,8 @@ public class CompanyCommandTest {
         CompanyCommand companyCommand = new CompanyCommand(editedPerson.getName().fullName,
                 new Company(editedPerson.getCompany().value));
 
-        String expectedMessage = String.format(CompanyCommand.MESSAGE_ADD_COMPANY_SUCCESS,
-                editedPerson.getName().fullName, editedPerson.getCompany().value);
+        String expectedMessage = String.format(CompanyCommand.MESSAGE_ADD_COMPANY_WARN,
+                editedPerson.getName().fullName, editedPerson.getCompany().value, firstPerson.getCompany().value);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
@@ -95,6 +96,17 @@ public class CompanyCommandTest {
         CompanyCommand companyCommand = new CompanyCommand("ABC",
                 new Company(VALID_COMPANY_AMY));
         assertCommandFailure(companyCommand, model, String.format(CompanyCommand.MESSAGE_PERSON_NOT_FOUND, "ABC"));
+    }
+
+    @Test
+    public void execute_deleteCompanyAlreadyDeleted_throwsCommandException() {
+        Person personToDeleteCompany = new PersonBuilder()
+                .withName("Alex Tan").withPhone("12345678").withCompany("").build();
+        Model model = new ModelManager();
+        model.addPerson(personToDeleteCompany);
+        CompanyCommand deleteCompanyCommand = new CompanyCommand("Alex Tan", new Company(""));
+        assertCommandFailure(deleteCompanyCommand, model,
+                String.format(CompanyCommand.MESSAGE_DELETE_COMPANY_FAILURE, "Alex Tan"));
     }
 
     @Test

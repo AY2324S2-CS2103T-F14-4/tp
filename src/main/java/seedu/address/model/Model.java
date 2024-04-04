@@ -56,6 +56,10 @@ public interface Model {
      * Returns true if a person with the same identity as {@code person} exists in the address book.
      */
     boolean hasPerson(Person person);
+    /**
+     * Returns true if a person with a similar contact name as {@code person} exists in the address book.
+     */
+    boolean hasSimilarPerson(Person person);
 
     /**
      * Deletes the given person.

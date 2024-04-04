@@ -24,6 +24,14 @@ public class Company {
         return value;
     }
 
+    /**
+     * Checks if the Person has a company tag.
+     * @return true if the value is not empty (has company tag), false otherwise.
+     */
+    public boolean hasCompany() {
+        return !value.isEmpty();
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
