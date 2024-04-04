@@ -462,9 +462,6 @@ _Details coming soon ..._
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
 
-
-<div style="page-break-after: always;"></div>
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command summary
