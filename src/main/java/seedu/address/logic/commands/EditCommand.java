@@ -11,15 +11,23 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.*;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.Priority;
+import seedu.address.model.person.Remark;
+import seedu.address.model.person.Company;
+import seedu.address.model.person.Meeting;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -73,7 +81,7 @@ public class EditCommand extends Command {
         }
 
         Person personToEdit = personOptional.get();
-        Person editedPerson = EditPersonDescriptor.createEditedPerson(personToEdit, editPersonDescriptor);
+        Person editedPerson = editPersonDescriptor.createEditedPerson(personToEdit, editPersonDescriptor);
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
@@ -81,33 +89,8 @@ public class EditCommand extends Command {
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
     }
-
-    /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
-     */
-    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
-        assert personToEdit != null;
-
-        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Company updatedCompany = personToEdit.getCompany();
-        Boolean updatedStar = personToEdit.isStarred();
-        Priority updatedPriority = personToEdit.getPriority();
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-        Remark updatedRemark = personToEdit.getRemark();
-        Meeting updatedMeeting = personToEdit.getMeeting();
-
-
-
-        return new Person(updatedName, updatedPhone, updatedEmail,
-                updatedAddress, updatedCompany, updatedMeeting, updatedPriority, updatedStar, updatedRemark, updatedTags);
-    }
-
 
     /**
      * Stores the details to edit the person with. Each non-empty field value will replace the
@@ -119,13 +102,11 @@ public class EditCommand extends Command {
         private Email email;
         private Address address;
         private Priority priority;
-
         private Boolean star;
         private Set<Tag> tags;
-
         private Meeting meeting;
-
         private Remark remark;
+
         public EditPersonDescriptor() {}
 
         /**
@@ -164,32 +145,6 @@ public class EditCommand extends Command {
             return Optional.ofNullable(phone);
         }
 
-
-        /**
-         * Creates and returns a {@code Person} with the details of {@code personToEdit}
-         * edited with {@code editPersonDescriptor}.
-         */
-        private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
-            assert personToEdit != null;
-
-            Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-            Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-            Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-            Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-            Company updatedCompany = personToEdit.getCompany();
-            Priority updatedPriority = personToEdit.getPriority();
-            Boolean updatedStar = personToEdit.isStarred();
-            Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-            Meeting updatedMeeting = personToEdit.getMeeting();
-            Remark updatedRemark = personToEdit.getRemark();
-
-
-            return new Person(updatedName, updatedPhone, updatedEmail,
-                    updatedAddress, updatedCompany, updatedMeeting, updatedPriority, updatedStar, updatedRemark, updatedTags);
-        }
-
-
-
         public void setEmail(Email email) {
             this.email = email;
         }
@@ -210,16 +165,16 @@ public class EditCommand extends Command {
             this.priority = priority;
         }
 
-        public Optional<Boolean> isStarred() {
-            return Optional.ofNullable(star);
+        public Optional<Priority> getPriority() {
+            return Optional.ofNullable(priority);
         }
 
         public void setStar(Boolean star) {
             this.star = star;
         }
 
-        public Optional<Priority> getPriority() {
-            return Optional.ofNullable(priority);
+        public Optional<Boolean> isStarred() {
+            return Optional.ofNullable(star);
         }
 
         public void setTags(Set<Tag> tags) {
@@ -246,23 +201,45 @@ public class EditCommand extends Command {
             this.remark = remark;
         }
 
+        /**
+         * Creates and returns a {@code Person} with the details of {@code personToEdit}
+         * edited with {@code editPersonDescriptor}.
+         */
+        public static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
+            assert personToEdit != null;
+
+            Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
+            Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
+            Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
+            Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+            Company updatedCompany = personToEdit.getCompany();
+            Priority updatedPriority = personToEdit.getPriority();
+            Boolean updatedStar = personToEdit.isStarred();
+            Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+            Meeting updatedMeeting = personToEdit.getMeeting();
+            Remark updatedRemark = personToEdit.getRemark();
+
+            return new Person(updatedName, updatedPhone, updatedEmail,
+                    updatedAddress, updatedCompany, updatedMeeting, updatedPriority, updatedStar, updatedRemark, updatedTags);
+        }
+
         @Override
         public boolean equals(Object other) {
             if (other == this) {
                 return true;
             }
 
-            // instanceof handles nulls
             if (!(other instanceof EditPersonDescriptor)) {
                 return false;
             }
 
-            EditPersonDescriptor otherEditPersonDescriptor = (EditPersonDescriptor) other;
-            return Objects.equals(name, otherEditPersonDescriptor.name)
-                    && Objects.equals(phone, otherEditPersonDescriptor.phone)
-                    && Objects.equals(email, otherEditPersonDescriptor.email)
-                    && Objects.equals(address, otherEditPersonDescriptor.address)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
+            EditPersonDescriptor otherDescriptor = (EditPersonDescriptor) other;
+            return getName().equals(otherDescriptor.getName())
+                    && getPhone().equals(otherDescriptor.getPhone())
+                    && getEmail().equals(otherDescriptor.getEmail())
+                    && getAddress().equals(otherDescriptor.getAddress())
+                    && getPriority().equals(otherDescriptor.getPriority())
+                    && getTags().equals(otherDescriptor.getTags());
         }
 
         @Override
@@ -272,7 +249,11 @@ public class EditCommand extends Command {
                     .add("phone", phone)
                     .add("email", email)
                     .add("address", address)
+                    .add("priority", priority)
+                    .add("star", star)
                     .add("tags", tags)
+                    .add("meeting", meeting)
+                    .add("remark", remark)
                     .toString();
         }
     }
