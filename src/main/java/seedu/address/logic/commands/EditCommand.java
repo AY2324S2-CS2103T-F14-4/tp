@@ -106,6 +106,7 @@ public class EditCommand extends Command {
         private Set<Tag> tags;
         private Meeting meeting;
         private Remark remark;
+        private Company company;
 
         public EditPersonDescriptor() {}
 
@@ -169,6 +170,14 @@ public class EditCommand extends Command {
             return Optional.ofNullable(priority);
         }
 
+        public void setCompany(Company company) {
+            this.company = company;
+        }
+
+        public Optional<Company> getCompany() {
+            return Optional.ofNullable(company);
+        }
+
         public void setStar(Boolean star) {
             this.star = star;
         }
@@ -193,7 +202,7 @@ public class EditCommand extends Command {
             this.meeting = meeting;
         }
 
-        private Optional<Remark> getRemark() {
+        Optional<Remark> getRemark() {
             return Optional.ofNullable(remark);
         }
 
@@ -250,6 +259,7 @@ public class EditCommand extends Command {
                     .add("phone", phone)
                     .add("email", email)
                     .add("address", address)
+                    .add("company", company)
                     .add("priority", priority)
                     .add("star", star)
                     .add("tags", tags)
@@ -257,5 +267,6 @@ public class EditCommand extends Command {
                     .add("remark", remark)
                     .toString();
         }
+
     }
 }
