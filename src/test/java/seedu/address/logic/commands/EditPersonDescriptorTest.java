@@ -70,8 +70,8 @@ public class EditPersonDescriptorTest {
                 + editPersonDescriptor.isStarred().orElse(null) + ", tags="
                 + editPersonDescriptor.getTags().orElse(null) + ", meeting="
                 + editPersonDescriptor.getMeeting().orElse(null) + ", remark="
-                + editPersonDescriptor.getRemark().orElse((null)) +
-                "}";
+                + editPersonDescriptor.getRemark().orElse((null))
+                + "}";
         assertEquals(expected, editPersonDescriptor.toString());
     }
 }
