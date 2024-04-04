@@ -1,0 +1,57 @@
+@startuml
+
+class Command {
+    - name: Name
+    - editPersonDescriptor: EditPersonDescriptor
+
+    + execute(Model): CommandResult
+}
+
+class EditCommand {
+    - COMMAND_WORD: String
+    - MESSAGE_USAGE: String
+    - MESSAGE_EDIT_PERSON_SUCCESS: String
+    - MESSAGE_NOT_EDITED: String
+    - MESSAGE_DUPLICATE_PERSON: String
+    - name: Name
+    - editPersonDescriptor: EditPersonDescriptor
+
+    + EditCommand(Name, EditPersonDescriptor)
+    + execute(Model): CommandResult
+    - createEditedPerson(Person, EditPersonDescriptor): Person
+}
+
+class EditPersonDescriptor {
+    - name: Name
+    - phone: Phone
+    - email: Email
+    - address: Address
+    - priority: Priority
+    - star: Boolean
+    - tags: Set<Tag>
+
+    + EditPersonDescriptor()
+    + EditPersonDescriptor(EditPersonDescriptor)
+    + isAnyFieldEdited(): boolean
+    + setName(Name)
+    + getName(): Optional<Name>
+    + setPhone(Phone)
+    + getPhone(): Optional<Phone>
+    + setEmail(Email)
+    + getEmail(): Optional<Email>
+    + setAddress(Address)
+    + getAddress(): Optional<Address>
+    + setPriority(Priority)
+    + getPriority(): Optional<Priority>
+    + setStar(Boolean)
+    + isStarred(): Optional<Boolean>
+    + setTags(Set<Tag>)
+    + getTags(): Optional<Set<Tag>>
+    + equals(Object): boolean
+    + toString(): String
+}
+
+Command <|-- EditCommand
+EditCommand *- EditPersonDescriptor : Composition
+
+@enduml

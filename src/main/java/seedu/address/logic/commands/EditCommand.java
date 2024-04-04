@@ -14,22 +14,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Company;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Meeting;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.Priority;
-import seedu.address.model.person.Remark;
+import seedu.address.model.person.*;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -40,34 +30,32 @@ public class EditCommand extends Command {
     public static final String COMMAND_WORD = "edit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
-            + "by the index number used in the displayed person list. "
+            + "by the name used in the displayed person list. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_NAME + "NAME] "
+            + "Parameters: " + PREFIX_NAME + "NAME "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+            + "Example: " + COMMAND_WORD + " Alex Tan "
+            + PREFIX_NAME + "Alex";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
-    private final Index index;
+    private final Name name;
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
+     * @param name of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
-    public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
-        requireNonNull(index);
+    public EditCommand(Name name, EditPersonDescriptor editPersonDescriptor) {
+        requireNonNull(name);
         requireNonNull(editPersonDescriptor);
 
-        this.index = index;
+        this.name = name;
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
 
@@ -76,12 +64,16 @@ public class EditCommand extends Command {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        Optional<Person> personOptional = lastShownList.stream()
+                .filter(person -> person.getName().equals(name))
+                .findFirst();
+
+        if (personOptional.isEmpty()) {
+            throw new CommandException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, name));
         }
 
-        Person personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        Person personToEdit = personOptional.get();
+        Person editedPerson = EditPersonDescriptor.createEditedPerson(personToEdit, editPersonDescriptor);
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
@@ -104,42 +96,18 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Company updatedCompany = personToEdit.getCompany();
-        Meeting updatedMeeting = personToEdit.getMeeting();
         Boolean updatedStar = personToEdit.isStarred();
         Priority updatedPriority = personToEdit.getPriority();
-        Remark updatedRemark = personToEdit.getRemark();
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Remark updatedRemark = personToEdit.getRemark();
+        Meeting updatedMeeting = personToEdit.getMeeting();
+
+
 
         return new Person(updatedName, updatedPhone, updatedEmail,
-                updatedAddress, updatedCompany,
-                updatedMeeting, updatedPriority,
-                updatedStar, updatedRemark, updatedTags);
-
+                updatedAddress, updatedCompany, updatedMeeting, updatedPriority, updatedStar, updatedRemark, updatedTags);
     }
 
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof EditCommand)) {
-            return false;
-        }
-
-        EditCommand otherEditCommand = (EditCommand) other;
-        return index.equals(otherEditCommand.index)
-                && editPersonDescriptor.equals(otherEditCommand.editPersonDescriptor);
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .add("index", index)
-                .add("editPersonDescriptor", editPersonDescriptor)
-                .toString();
-    }
 
     /**
      * Stores the details to edit the person with. Each non-empty field value will replace the
@@ -150,8 +118,14 @@ public class EditCommand extends Command {
         private Phone phone;
         private Email email;
         private Address address;
+        private Priority priority;
+
+        private Boolean star;
         private Set<Tag> tags;
 
+        private Meeting meeting;
+
+        private Remark remark;
         public EditPersonDescriptor() {}
 
         /**
@@ -163,6 +137,7 @@ public class EditCommand extends Command {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
+            setPriority(toCopy.priority);
             setTags(toCopy.tags);
         }
 
@@ -189,6 +164,32 @@ public class EditCommand extends Command {
             return Optional.ofNullable(phone);
         }
 
+
+        /**
+         * Creates and returns a {@code Person} with the details of {@code personToEdit}
+         * edited with {@code editPersonDescriptor}.
+         */
+        private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
+            assert personToEdit != null;
+
+            Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
+            Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
+            Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
+            Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+            Company updatedCompany = personToEdit.getCompany();
+            Priority updatedPriority = personToEdit.getPriority();
+            Boolean updatedStar = personToEdit.isStarred();
+            Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+            Meeting updatedMeeting = personToEdit.getMeeting();
+            Remark updatedRemark = personToEdit.getRemark();
+
+
+            return new Person(updatedName, updatedPhone, updatedEmail,
+                    updatedAddress, updatedCompany, updatedMeeting, updatedPriority, updatedStar, updatedRemark, updatedTags);
+        }
+
+
+
         public void setEmail(Email email) {
             this.email = email;
         }
@@ -205,21 +206,44 @@ public class EditCommand extends Command {
             return Optional.ofNullable(address);
         }
 
-        /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
-         */
+        public void setPriority(Priority priority) {
+            this.priority = priority;
+        }
+
+        public Optional<Boolean> isStarred() {
+            return Optional.ofNullable(star);
+        }
+
+        public void setStar(Boolean star) {
+            this.star = star;
+        }
+
+        public Optional<Priority> getPriority() {
+            return Optional.ofNullable(priority);
+        }
+
         public void setTags(Set<Tag> tags) {
             this.tags = (tags != null) ? new HashSet<>(tags) : null;
         }
 
-        /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
-         * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
-         */
         public Optional<Set<Tag>> getTags() {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+        }
+
+        public Optional<Meeting> getMeeting() {
+            return Optional.ofNullable(meeting);
+        }
+
+        private void setMeeting(Meeting meeting) {
+            this.meeting = meeting;
+        }
+
+        private Optional<Remark> getRemark() {
+            return Optional.ofNullable(remark);
+        }
+
+        private void setRemark(Remark remark) {
+            this.remark = remark;
         }
 
         @Override
