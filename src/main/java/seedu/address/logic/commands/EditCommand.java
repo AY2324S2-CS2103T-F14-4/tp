@@ -25,9 +25,9 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Priority;
-import seedu.address.model.person.Remark;
 import seedu.address.model.person.Company;
 import seedu.address.model.person.Meeting;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -220,7 +220,8 @@ public class EditCommand extends Command {
             Remark updatedRemark = personToEdit.getRemark();
 
             return new Person(updatedName, updatedPhone, updatedEmail,
-                    updatedAddress, updatedCompany, updatedMeeting, updatedPriority, updatedStar, updatedRemark, updatedTags);
+                    updatedAddress, updatedCompany, updatedMeeting,
+                    updatedPriority, updatedStar, updatedRemark, updatedTags);
         }
 
         @Override
