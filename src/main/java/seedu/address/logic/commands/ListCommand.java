@@ -13,12 +13,15 @@ public class ListCommand extends Command {
     public static final String COMMAND_WORD = "list";
 
     public static final String MESSAGE_SUCCESS = "Listed all persons";
-
+    public static final String MESSAGE_EMPTY_CONTACTS = "Oops, there are currently no contacts in Connectify";
 
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        if (model.getFilteredPersonList().size() == 0) {
+            return new CommandResult(MESSAGE_EMPTY_CONTACTS);
+        }
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

@@ -31,7 +31,7 @@ public class PriorityCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_addPriorityUnfilteredList_success() {
+    public void execute_addHighPriorityUnfilteredList_success() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
@@ -41,7 +41,26 @@ public class PriorityCommandTest {
                 new Priority(editedPerson.getPriority().value));
 
         String expectedMessage = String.format(PriorityCommand.MESSAGE_ADD_PRIORITY_SUCCESS,
-                "high", "**", editedPerson.getName().fullName, editedPerson.getPhone(), editedPerson.getEmail());
+                "high", "**", editedPerson.getName().fullName, editedPerson.getPhone());
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(firstPerson, editedPerson);
+
+        assertCommandSuccess(priorityCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_addMedPriorityUnfilteredList_success() {
+        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+
+        Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person editedPerson = new PersonBuilder(firstPerson).withPriority("med").build();
+
+        PriorityCommand priorityCommand = new PriorityCommand(editedPerson.getName().fullName,
+                new Priority(editedPerson.getPriority().value));
+
+        String expectedMessage = String.format(PriorityCommand.MESSAGE_ADD_PRIORITY_SUCCESS,
+                "medium", "*", editedPerson.getName().fullName, editedPerson.getPhone());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
@@ -57,7 +76,7 @@ public class PriorityCommandTest {
         PriorityCommand priorityCommand = new PriorityCommand(firstPerson.getName().fullName,
                 new Priority(""));
         String expectedMessage = String.format(PriorityCommand.MESSAGE_DELETE_PRIORITY_SUCCESS,
-                editedPerson.getName().fullName);
+                firstPerson.getName().fullName, firstPerson.getPhone());
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
         assertCommandSuccess(priorityCommand, model, expectedMessage, expectedModel);
@@ -79,6 +98,17 @@ public class PriorityCommandTest {
     }
 
     @Test
+    public void execute_removePriorityAlreadyRemovedPriority_throwsCommandException() {
+        Person personToRemovePriority = new PersonBuilder()
+                .withName("Alex Tan").withPhone("12345678").withPriority("").build();
+        Model model = new ModelManager();
+        model.addPerson(personToRemovePriority);
+        PriorityCommand removePriorityCommand = new PriorityCommand("Alex Tan", new Priority(""));
+        assertCommandFailure(removePriorityCommand, model,
+                String.format(PriorityCommand.MESSAGE_DELETE_PRIORITY_FAILURE, "Alex Tan"));
+    }
+
+    @Test
     public void equals() {
         final PriorityCommand standardCommand = new PriorityCommand("Amy Reale",
                 new Priority(VALID_PRIORITY_AMY));
@@ -90,7 +120,7 @@ public class PriorityCommandTest {
         assertTrue(standardCommand.equals(standardCommand));
         // null -> returns false
         assertFalse(standardCommand.equals(null));
-        // different remark -> returns false
+        // different priority -> returns false
         assertFalse(standardCommand.equals(new PriorityCommand("Bob Tan",
                 new Priority(VALID_PRIORITY_BOB))));
     }
