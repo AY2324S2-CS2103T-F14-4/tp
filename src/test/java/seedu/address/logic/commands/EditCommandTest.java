@@ -27,7 +27,8 @@ public class EditCommandTest {
 
     @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() {
-        Person lastPerson = model.getAddressBook().getPersonList().get(model.getAddressBook().getPersonList().size() - 1);
+        Person lastPerson = model.getAddressBook().getPersonList()
+                .get(model.getAddressBook().getPersonList().size() - 1);
         PersonBuilder personInList = new PersonBuilder(lastPerson);
         Person editedPerson = personInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withTags(VALID_TAG_HUSBAND).build();
