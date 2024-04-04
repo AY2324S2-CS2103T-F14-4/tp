@@ -1,13 +1,14 @@
+
 ---
-  layout: default.md
-  title: "User Guide"
-  pageNav: 3
+layout: default.md
+title: "User Guide"
+pageNav: 3
 ---
 
 # Connectify User Guide
 
-Connectify is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) 
-while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Connectify can get your 
+Connectify is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI)
+while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Connectify can get your
 contact management tasks done faster than traditional GUI apps.
 
 <!-- * Table of Contents -->
@@ -30,18 +31,18 @@ contact management tasks done faster than traditional GUI apps.
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-   * `list` : Lists all contacts.
+    * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` 
-   to Connectify.
+    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe`
+      to Connectify.
 
-   * `delete John Doe` : Deletes the contact with the specified contact name.
-   
-   * `edit John Doe n/John Tan` : edits the name attribute of the contact of `John Doe` to `John Tan`
+    * `delete John Doe` : Deletes the contact with the specified contact name.
 
-   * `clear` : Deletes all contacts.
+    * `edit John Doe n/John Tan` : edits the name attribute of the contact of `John Doe` to `John Tan`
 
-   * `exit` : Exits the app.
+    * `clear` : Deletes all contacts.
+
+    * `exit` : Exits the app.
 
 1. Refer to the [Features](#features) below for details of each command.
 
@@ -60,7 +61,7 @@ contact management tasks done faster than traditional GUI apps.
   e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 
 * Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -69,7 +70,7 @@ contact management tasks done faster than traditional GUI apps.
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
-</box>
+  </box>
 
 ### Viewing help : `help`
 
@@ -84,16 +85,16 @@ Format: `help`
 
 Adds a person to the address book.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Format: `add n/NAME p/PHONE_NUMBER [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
 <box type="tip" seamless>
 
-**Tip:** A person can have any number of tags (including 0)
+**Tip:** A person's email and address are optional. A person can have any number of tags (including 0).
 </box>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 a/John street, block 123, #01-01`
+* `add n/Betsy Crowe t/recruiter e/betsycrowe@example.com a/Betsy street, block 456, #02-02 p/1234567`
 
 ### Listing all persons : `list`
 
@@ -107,19 +108,19 @@ Edits an existing person in the address book.
 
 Format: `edit NAME [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
-* Edits the contact with the specified `NAME`. The specified `NAME` of the contact to edit is case-insensitive. 
-    e.g `edit John Doe n/John` is the same as `edit john doe n/John`
+* Edits the contact with the specified `NAME`. The specified `NAME` of the contact to edit is case-insensitive.
+  e.g `edit John Doe n/John` is the same as `edit john doe n/John`
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person’s tags by typing `t/` without
-    specifying any tags after it.
+  specifying any tags after it.
 
 Examples:
-*  `edit John Doe p/91234567 e/johndoe@example.com` Edits the phone number and email address of the contact named 
-    `John Doe` to be `91234567` and `johndoe@example.com` respectively.
-*  `edit Betsy n/Betsy Crower t/` Edits the name of the contact named `Betsy` to be `Betsy Crower` and clears all 
-    existing tags.
+*  `edit John Doe p/91234567 e/johndoe@example.com` Edits the phone number and email address of the contact named
+   `John Doe` to be `91234567` and `johndoe@example.com` respectively.
+*  `edit Betsy n/Betsy Crower t/` Edits the name of the contact named `Betsy` to be `Betsy Crower` and clears all
+   existing tags.
 
 ### Locating persons by name: `find`
 
@@ -130,14 +131,14 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* Partial words will be matched e.g. `Han` will match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Examples:
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+  ![result for 'find james betsy'](images/findJamesBetsyResult.png)
 
 ### Deleting a person : `delete`
 
@@ -151,30 +152,56 @@ Format: `delete NAME`
 Examples:
 * `delete Betsy` deletes the contact with the contact name `Betsy` in the address book.
 
-### Adding a company tag to a person : `co`
+### Tagging a company to a person : `co`
 
-Adds the specified company tag name to the specified contact.
+Tags the specified company name to the specified contact.
 
 Format: `co NAME c/COMPANY_NAME`
 
-* Adds the company tag to the person's contact. The specified `NAME` of the contact to add the company tag is 
-case-insensitive. e.g `co John Doe c/TikTok` is the same as `co john doe c/TikTok`
+* Tags the company name to the person's contact. The specified `NAME` of the contact to add the company tag is
+  case-insensitive. e.g `co John Doe c/TikTok` is the same as `co john doe c/TikTok`
+* Entering `co NAME c/`, leaving the `COMPANY_NAME` as empty, will remove the company
+  tag from a person's contact. If the person's contact did not have a company
+  tag and `co NAME c/` is entered, an error message will appear and the
+  person's contact will remain the same.
 
 Examples:
 * `co Betsy c/Google` adds the company tag `Google` to the contact name `Betsy` in the address book.
+* `co Alex c/` removes the company tag from the contact name `Alex` in the address book.
 
-### Assigning priority level to a contact : `pr/PRIORITY_LEVEL`
+### Locating persons by company tag : `findco`
 
-Assigns the specified priority level to the specified contact.
+Finds persons whose company tag exactly matches the specified keyword.
+
+Format: `findco KEYWORD`
+
+* Finds persons by the company tag. The specified `KEYWORD` is
+  case-insensitive. e.g `findco TikTok` is the same as `findco tiktok`
+* The specified keyword has to be exactly the same as the person's company
+  tag for the person to be found e.g. the keyword `goog` will not match the company tag `google`
+
+Examples:
+* `findco Google` returns `John Lim`, who has a company tag of `Google` in the address book.<br>
+  ![result for 'findco Google'](images/findcoGoogle.png)
+
+### Prioritising a contact : `pr/PRIORITY_LEVEL`
+
+Assigns the specified priority level to the specified contact or removes the priority level from the specified contact.
 
 Format: `pr/PRIORITY_LEVEL NAME`
 
-* Assigns the specified priority level to the person's contact. The specified `NAME` of the contact to assign the 
-priority level is case-insensitive. e.g `pr/high Alex Tan` is the same as `pr/high alex tan`
-* Acceptable values for PRIORITY_LEVEL are `high` and `med`.
+* The specified `NAME` of the contact to assign the priority level to is case-insensitive.
+  e.g `pr/high Alex Tan` is the same as `pr/high alex tan`
+* Acceptable values for PRIORITY_LEVEL are `high`, `med` and `none`
+* `pr/high NAME` assigns the `high` priority level to the specified contact.
+* `pr/med NAME` assigns the `medium` priority level to the specified contact.
+* `pr/none NAME` removes the priority level from the specified contact. If the person's
+  contact did not have a priority level and `pr/none NAME` is entered, an error message will appear and the
+  person's contact will remain the same.
 
 Examples:
-* `pr/high Alex Tan` assigns `HIGH` priority level to the contact name `Alex Tan` in the address book.
+* `pr/high Alex Tan` assigns `high` priority level to the contact name `Alex Tan` in the address book.
+* `pr/none Alex Tan` removes the priority level from the contact name `Alex Tan` in the address book.
 
 ### Filtering contacts by priority : `filter-PRIORITY_LEVEL`
 
@@ -182,9 +209,54 @@ Filters the contacts in the address book by the specified priority level.
 
 Format: `filter-PRIORITY_LEVEL`
 
+* Acceptable values for PRIORITY_LEVEL are high and med.
+
 Examples:
-* `filter-high` returns a list of contacts with priority assigned as `high`.
-* `filter-med` returns a list of contacts with priority assigned as `med`.
+* `filter-high` returns a list of contacts with high priority.
+* `filter-med` returns a list of contacts with medium priority.
+
+### Adding a meeting to a person : `mtg`
+
+Adds a meeting with a description and a date and time to the specified person in the address book.
+
+Format: `mtg NAME m/MEETING_DESCRIPTION time/MEETING_TIME`
+
+* The specified NAME of the contact is case-insensitive.
+  e.g `mtg john lim m/interview time/23-03-2024 1600-1700` is
+  the same as `mtg John Lim m/interview time/23-03-2024 1600-1700`
+* The specified MEETING_TIME must be of the format dd-MM-YYYY HHmm-HHmm.
+* Entering `mtg NAME m/` removes the meeting from the specified contact.
+  If the person's contact did not have a meeting and `mtg NAME m/` is entered,
+  an error message will appear and the person's contact will remain the same.
+* If `MEETING_DESCRIPTION` is entered, `MEETING_TIME` is mandatory to be entered.
+
+Examples:
+* `mtg Alex Tan lim m/interview time/05-11-2024 0800-0930`
+* `mtg Alex Tan lim m/`
+
+### Viewing all contacts with meetings : `meetings`
+
+Lists all contacts with meetings.
+
+Format: `meetings`
+
+### Adding a remark to a person : `remark`
+
+Adds the specified remark to the specified contact.
+
+Format: `remark NAME r/REMARK_DESCRIPTION`
+
+* The specified `NAME` of the contact to add the company tag is
+  case-insensitive. e.g `remark John Doe r/met him at the career fair` is the
+  same as `remark john doe r/met him at the career fair`
+* Entering `remark NAME r/`, leaving the `REMARK_DESCRIPTION` as empty, will remove the remark
+  from a person's contact. If the person's contact did not have a remark
+  and `remark NAME r/` is entered, an error message will appear and
+  the person's contact will remain the same.
+
+Examples:
+* `co Betsy c/Google` adds the company tag `Google` to the contact name `Betsy` in the address book.
+* `co Alex c/` removes the company tag from the contact name `Alex` in the address book.
 
 ### Getting the number of contacts : `count`
 
@@ -204,9 +276,22 @@ Format: `star NAME`
 Examples:
 * `star Betsy` stars the contact with the contact name `Betsy` in the address book.
 
+### Removing the star from a contact : `unstar`
+
+Removes the star from the specified contact in the address book.
+
+Format: `unstar NAME`
+
+* Removes the star from the contact with the specified `NAME`. The specified `NAME` of the contact
+  to remove the star from is case-insensitive.
+  e.g `unstar John Doe` is the same as `unstar john doe`
+
+Examples:
+* `unstar Betsy` removes the star from the contact with the contact name `Betsy` in the address book.
+
 ### Undoing the last command : `undo`
 
-Undoes the most recent add command by removing the most recently added contact.
+Undoes the most recently added command by removing the most recently added contact.
 
 Format: `undo`
 
