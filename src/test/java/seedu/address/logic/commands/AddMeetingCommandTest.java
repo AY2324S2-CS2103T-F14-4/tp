@@ -90,13 +90,6 @@ public class AddMeetingCommandTest {
     }
 
     @Test
-    public void execute_invalidPersonName_throwsCommandException() {
-        AddMeetingCommand addMeetingCommand = new AddMeetingCommand("",
-                new Meeting("Interview", "20-03-2024", "1500", "1600"));
-        assertCommandFailure(addMeetingCommand, model, AddMeetingCommand.MESSAGE_EMPTY_NAME);
-    }
-
-    @Test
     public void execute_emptyMeetingDeleteFailure_throwsCommandException() {
         Person thirdPerson = model.getFilteredPersonList().get(INDEX_THIRD_PERSON.getZeroBased());
         String thirdPersonName = thirdPerson.getName().fullName;

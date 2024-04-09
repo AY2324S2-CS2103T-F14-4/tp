@@ -19,25 +19,27 @@ import seedu.address.model.person.Meeting;
  */
 public class AddMeetingCommandParser implements Parser<AddMeetingCommand> {
 
-    private static final String MESSAGE_PARSE_ERROR = "Oops, please input the meeting command in the following format"
+    public static final String MESSAGE_PARSE_ERROR = "Oops, please input the meeting command in the following format"
             + ":\nmtg <contact_name> m/<mtg_description> time/dd-MM-YYYY HHmm-HHmm\n"
             + "Example: mtg alex m/interview time/23-03-2025 1400-1500";
 
-    private static final String MESSAGE_EMPTY_DESC = "Oops, please input the description of your meeting.\n"
+    public static final String MESSAGE_EMPTY_DESC = "Oops, please input the description of your meeting.\n"
             + "Example: mtg alex m/interview time/23-03-2025 1400-1500";
 
-    private static final String MESSAGE_EMPTY_TIMING = "Oops, please input the timing as well, in this format: "
+    public static final String MESSAGE_EMPTY_TIMING = "Oops, please input the timing as well, in this format: "
             + "time/dd-MM-YYYY HHmm-HHmm\n" + "Example: mtg alex m/interview time/23-03-2025 1400-1500";
 
-    private static final String MESSAGE_EMPTY_NAME = "Oops, please state the name of the contact.";
-    private static final String MESSAGE_INVALID_DATETIME = "Oops, invalid meeting timing inputted.\nPlease ensure that"
+    public static final String MESSAGE_EMPTY_NAME = "Oops, please state the name of the contact.";
+    public static final String MESSAGE_INVALID_DATETIME = "Oops, invalid meeting timing inputted.\nPlease ensure that"
             + " the date and time is valid, and in the format: time/dd-MM-YYYY HHmm-HHmm.\n";
-    private static final String MESSAGE_TIME_IN_PAST = "Oops, the meeting cannot be scheduled for a timing that "
-            + "has passed.\nNote that the timing has to be in the future relative to the current timing.";
+    public static final String MESSAGE_TIME_IN_PAST = "Oops, the meeting cannot be scheduled for a timing that"
+            + " has passed.\nNote that the timing has to be in the future relative to the current timing.";
+    public static final String MESSAGE_TIMING_BACKWARDS = "Oops, the end timing of the meeting cannot be ahead of the"
+            + " start of the meeting.";
     /**
      * Parses the given {@code String} of arguments in the context of the AddMeetingCommand
      * and returns a AddMeetingCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform to the expected format
      */
     public AddMeetingCommand parse(String args) throws ParseException {
         requireNonNull(args);
@@ -59,18 +61,24 @@ public class AddMeetingCommandParser implements Parser<AddMeetingCommand> {
             return new AddMeetingCommand(contactName, new Meeting("", "", "", ""));
         }
         try {
-            String timing = time.trim();
-            String[] dateTime = timing.split(" ");
-            String date = dateTime[0].trim();
-            String[] startEnd = dateTime[1].split("-");
-            String start = startEnd[0].trim();
-            String end = startEnd[1].trim();
+            //timeDetails contains date, start, end, in order
+            String[] timeDetails = parseTiming(time);
+            String date = timeDetails[0];
+            String start = timeDetails[1];
+            String end = timeDetails[2];
             LocalDate mtgDate = ParserUtil.parseDate(date);
-            LocalDate currDate = LocalDate.now();
-            LocalTime mtgTime = ParserUtil.parseTime(start);
+            LocalDate currDate = LocalDate.now(ZoneId.of("Asia/Singapore"));
+            LocalTime mtgStart = ParserUtil.parseTime(start);
+            LocalTime mtgEnd = ParserUtil.parseTime(end);
             LocalTime currTime = LocalTime.now(ZoneId.of("Asia/Singapore"));
-            if (mtgDate.isBefore(currDate) || mtgTime.isBefore(currTime)) {
+            if (mtgDate.isBefore(currDate)) {
                 throw new ParseException(MESSAGE_TIME_IN_PAST);
+            }
+            if (mtgDate.isEqual(currDate) && mtgStart.isBefore(currTime)) {
+                throw new ParseException(MESSAGE_TIME_IN_PAST);
+            }
+            if (mtgEnd.isBefore(mtgStart)) {
+                throw new ParseException(MESSAGE_TIMING_BACKWARDS);
             }
             return new AddMeetingCommand(contactName, new Meeting(meeting, date, start, end));
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -78,6 +86,24 @@ public class AddMeetingCommandParser implements Parser<AddMeetingCommand> {
         } catch (DateTimeParseException e) {
             throw new ParseException(MESSAGE_INVALID_DATETIME);
         }
+    }
+    /**
+     * Parses the given {@code String} of the timing string and returns an array of strings
+     * containing the strings for the date, start time and end time, respectively in order.
+     * @throws ParseException if the user input does not conform to the expected format
+     */
+    public static String[] parseTiming(String time) {
+        String[] result = new String[3];
+        String timing = time.trim();
+        String[] dateTime = timing.split(" ");
+        //first index stores date String
+        result[0] = dateTime[0].trim();
+        String[] startEnd = dateTime[1].split("-");
+        //second index stores start string
+        result[1] = startEnd[0].trim();
+        //third index stores end string
+        result[2] = startEnd[1].trim();
+        return result;
     }
     /**
      * Parses the given {@code meeting} string of the Meeting.toString() output format
