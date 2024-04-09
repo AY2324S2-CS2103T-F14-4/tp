@@ -36,7 +36,6 @@ public class AddMeetingCommand extends Command {
 
     public static final String MESSAGE_PERSON_NOT_FOUND = "Oops, %1$s's contact does not exist. Unable to add "
             + "meeting.";
-    public static final String MESSAGE_EMPTY_NAME = "Oops, please state the name of the contact.";
 
     private static Logger logger = Logger.getLogger("MeetingLogger");
     private final String name;
@@ -58,10 +57,6 @@ public class AddMeetingCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         logger.log(Level.INFO, "going to execute the AddMeetingCommand");
-        if (name.isEmpty()) {
-            logger.log(Level.WARNING, "empty name inputted.");
-            throw new CommandException(MESSAGE_EMPTY_NAME);
-        }
         List<Person> contactList = model.getFilteredPersonList();
         Person personToEdit = null;
         for (Person person : contactList) {
@@ -90,7 +85,6 @@ public class AddMeetingCommand extends Command {
                 personToEdit.isStarred(), personToEdit.getRemark(), personToEdit.getTags());
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-
         return new CommandResult(generateSuccessMessage(editedPerson, prevMeeting));
     }
 

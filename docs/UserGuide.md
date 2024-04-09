@@ -325,6 +325,8 @@ the meeting details will be updated to the new one and a message will inform you
 e.g `mtg john lim m/interview time/23-03-2024 1600-1700` is 
 the same as `mtg John Lim m/interview time/23-03-2024 1600-1700`
 * The specified MEETING_TIME must be of the format dd-MM-YYYY HHmm-HHmm.
+* The MEETING_TIME inputted has to be valid. Note that the timing has to be in the future relative to the
+  current timing.
 * Entering `mtg NAME m/` removes the meeting from the specified contact. <br>
 If the person's contact did not have a meeting and `mtg NAME m/` is entered, 
 an error message will appear and the person's contact will remain the same. 
