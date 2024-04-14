@@ -165,7 +165,7 @@ and only added on later to the contact with the `co NAME c/COMPANY_NAME` command
 
 Step 1. When the execute method of CompanyCommand is called, it takes in a Model object as a parameter. We check whether the 
 contactName of the CompanyCommand object is an empty string. If it is, we will throw a CommandException, else we continue. <br>
-Step 2. We will get the List<Person> representing the contacts in Connectify with `model.getFilteredPersonList()` and iterate
+Step 2. We will get the list of persons object representing the contacts in Connectify with `model.getFilteredPersonList()` and iterate
 through it to check for the contact in Connectify with the corresponding contactName. If we do not find a matching person, 
 we throw a CommandException that the contact does not exist in Connectify. <br>
 Step 3. Check whether the CompanyCommand object's company variable is an empty String. If it is, this means that it is a
@@ -225,7 +225,7 @@ time. For our current implementation, each contact is only allowed to have one m
 
 Step 1. When the execute method of AddMeetingCommand is called, it takes in a Model object as a parameter. We check whether the
 contactName of the AddMeetingCommand object is an empty string. If it is, we will throw a CommandException, else we continue. <br>
-Step 2. We will get the List<Person> representing the contacts in Connectify with `model.getFilteredPersonList()` and iterate
+Step 2. We will get the list of persons object representing the contacts in Connectify with `model.getFilteredPersonList()` and iterate
 through it to check for the contact in Connectify with the corresponding contactName. If we do not find a matching person,
 we throw a CommandException that the contact does not exist in Connectify. <br>
 Step 3. Check whether the AddMeetingCommand object's meeting variable is an empty String. If it is, this means that it is a
