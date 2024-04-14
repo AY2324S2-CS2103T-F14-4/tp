@@ -1,0 +1,91 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":AddMeetingCommandParser" as AddMeetingCommandParser LOGIC_COLOR
+participant ":Meeting" as Meeting MODEL_COLOR
+participant "d:AddMeetingCommand" as AddMeetingCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+participant ":Meeting" as Meeting MODEL_COLOR
+end box
+
+[-> LogicManager : execute("mtg alex yeoh m/interview time/28-04-2024 1500-1600")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("mtg alex yeoh m/interview time/28-04-2024 1500-1600")
+activate AddressBookParser
+
+create AddMeetingCommandParser
+AddressBookParser -> AddMeetingCommandParser
+activate AddMeetingCommandParser
+
+AddMeetingCommandParser --> AddressBookParser
+deactivate AddMeetingCommandParser
+
+AddressBookParser -> AddMeetingCommandParser : parse("alex yeoh m/interview time/28-04-2024 1500-1600")
+activate AddMeetingCommandParser
+
+create Meeting
+AddMeetingCommandParser -> Meeting
+activate Meeting
+
+Meeting --> AddMeetingCommandParser
+deactivate Meeting
+
+create AddMeetingCommand
+AddMeetingCommandParser -> AddMeetingCommand
+activate AddMeetingCommand
+
+AddMeetingCommand --> AddMeetingCommandParser :
+deactivate AddMeetingCommand
+
+AddMeetingCommandParser --> AddressBookParser : d
+deactivate AddMeetingCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+AddMeetingCommandParser -[hidden]-> AddressBookParser
+destroy AddMeetingCommandParser
+
+AddressBookParser --> LogicManager : d
+deactivate AddressBookParser
+
+LogicManager -> AddMeetingCommand : execute(m)
+activate AddMeetingCommand
+
+AddMeetingCommand -> Model : getFilteredPersonList()
+activate Model
+
+Model --> AddMeetingCommand
+deactivate Model
+
+AddMeetingCommand -> Model : setPerson(personToEdit, editedPerson)
+activate Model
+
+Model --> AddMeetingCommand
+deactivate Model
+
+AddMeetingCommand -> Model : updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS)
+activate Model
+
+Model --> AddMeetingCommand
+deactivate Model
+
+create CommandResult
+AddMeetingCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> AddMeetingCommand
+deactivate CommandResult
+
+AddMeetingCommand --> LogicManager : r
+deactivate AddMeetingCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

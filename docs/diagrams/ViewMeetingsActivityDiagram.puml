@@ -1,0 +1,23 @@
+@startuml
+skin rose
+skinparam ActivityFontSize 15
+skinparam ArrowFontSize 12
+start
+:User executes View Meetings command;
+
+'Since the beta syntax does not support placing the condition outside the
+'diamond we place it as the true branch instead.
+
+:Update FilteredPersonList by whether
+the person has a non-empty meeting attribute;
+:Get the FilteredPersonList;
+:Check if FilteredPersonList is empty;
+if () then ([else])
+    :Return CommandResult and display contacts
+    with the meeting attribute;
+else ([FilteredPersonList is empty])
+    :Return CommandResult of no contacts
+    found with meetings;
+endif
+stop
+@enduml

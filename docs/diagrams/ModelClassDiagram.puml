@@ -22,6 +22,7 @@ Class Company
 Class Priority
 Class Tag
 Class Remark
+Class Meeting
 
 Class I #FFFFFF
 }
@@ -40,14 +41,15 @@ UserPrefs .up.|> ReadOnlyUserPrefs
 
 AddressBook *--> "1" UniquePersonList
 UniquePersonList ----> "~* all" Person
-Person *--> Name
-Person *--> Phone
-Person *--> "*" Email
-Person *--> "*" Address
-Person *--> "*" Company
-Person *--> "*" Priority
+Person *--> "1" Name
+Person *--> "1" Phone
+Person *--> "0..1" Email
+Person *--> "0..1" Address
+Person *--> "0..1" Company
+Person *--> "0..1" Priority
 Person *--> "*" Tag
-Person *--> "*" Remark
+Person *--> "0..1" Remark
+Person *--> "0..1" Meeting
 
 Person : starred: Boolean
 

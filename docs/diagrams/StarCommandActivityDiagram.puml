@@ -1,0 +1,20 @@
+@startuml
+skin rose
+skinparam ActivityFontSize 15
+skinparam ArrowFontSize 12
+start
+:Input(contactName);
+:Search for Contact;
+if (Contact Found?) then ([yes])
+  if (Check Star Status) then ([false])
+    :Star Contact ★;
+    :Update Contact;
+    :Update Filtered List;
+  else ([true])
+    :Throw CommandException;
+  endif
+else ([no])
+  :Throw CommandException;
+endif
+stop
+@enduml

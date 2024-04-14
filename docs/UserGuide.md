@@ -92,7 +92,10 @@ The `cd` command changes the current working directory to the specified director
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br><br>
    ![Ui](images/Ui.png)
 
-<div style="page-break-after: always;"></div>
+
+
+
+
 
 1. Type the command in the command box and press 'Enter' on your keyboard to execute it. e.g. typing **`help`** and pressing 'Enter' will open the help window.<br>
    Some example commands you can try:
@@ -255,6 +258,8 @@ Examples:
 * `find John` returns `john` and `John Doe`
 * `find james betsy` returns `James Lee`, `Betsy Crowe`<br>
   ![result for 'find james betsy'](images/findJamesBetsyResult.png)
+
+<div style="page-break-after: always;"></div>
 
 ### Deleting a person : `delete`
 
@@ -444,6 +449,8 @@ Clears all contacts from Connectify.
 
 Format: `clear`
 
+<div style="page-break-after: always;"></div>
+
 ### Exiting the program : `exit`
 
 Exits the program.
@@ -504,12 +511,11 @@ Furthermore, certain edits can cause Connectify to behave in unexpected ways (e.
 
 --------------------------------------------------------------------------------------------------------------------
 
+<div style="page-break-after: always;"></div>
+
 ## Known issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-
-
-<div style="page-break-after: always;"></div>
 
 --------------------------------------------------------------------------------------------------------------------
 
