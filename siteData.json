@@ -64,7 +64,15 @@
         "appendix-instructions-for-manual-testing": "Appendix: Instructions for manual testing",
         "launch-and-shutdown": "Launch and shutdown",
         "deleting-a-person": "Deleting a person",
-        "saving-data": "Saving data"
+        "saving-data": "Saving data",
+        "prioritising-a-contact": "Prioritising a contact:",
+        "filtering-contacts-by-priority": "Filtering contacts by priority:",
+        "adding-a-meeting-to-a-person": "Adding a meeting to a person:",
+        "viewing-all-contacts-with-meetings": "Viewing all contacts with meetings:",
+        "adding-a-remark-to-a-person": "Adding a remark to a person:",
+        "getting-the-number-of-contacts": "Getting the number of contacts:",
+        "starring-a-contact": "Starring a contact:",
+        "removing-the-star-from-a-contact": "Removing the star from a contact:"
       },
       "headingKeywords": {}
     },
