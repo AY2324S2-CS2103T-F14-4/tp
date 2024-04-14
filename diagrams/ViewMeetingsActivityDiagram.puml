@@ -10,7 +10,8 @@ start
 
 :Update FilteredPersonList by whether
 the person has a non-empty meeting attribute;
-:Get the FilteredPersonList and check if it is empty;
+:Get the FilteredPersonList;
+:Check if FilteredPersonList is empty;
 if () then ([else])
     :Return CommandResult and display contacts
     with the meeting attribute;

@@ -11,19 +11,25 @@ start
 if () then ([else])
     :Check if contact exists in Connectify's data;
         if () then ([contact exists])
-            :Check if company command is to remove or to add;
+            :Check if company command is to remove or to add
+            (by whether company name specified is empty string);
                 if () then ([company command is to remove])
                     :Check if contact has existing company
                     attribute to remove;
                         if () then ([contact has existing company attribute])
-                            :Remove company attribute from contact;
+                            :Set CommandResult message to be
+                            MESSAGE_DELETE_COMPANY_SUCCESS;
                         else ([else])
-                            :Throw error message that there is no existing
-                            company attribute to remove from contact;
+                            :Set CommandResult message to be
+                            MESSAGE_DELETE_COMPANY_FAILURE;
                         endif
                 else ([else])
-                    :Add company attribute to contact;
+                    :Set CommandResult message to be
+                    MESSAGE_ADD_COMPANY_SUCCESS;
                 endif
+                :Set contact Person to be the
+                new edited Person object;
+                :Update filteredPersonList to show all contacts;
         else ([else])
             :Throw contact does not exist CommandException;
         endif
