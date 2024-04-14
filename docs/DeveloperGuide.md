@@ -224,6 +224,42 @@ The logic of the view meetings function follows the following activity diagram.
 
 <puml src="diagrams/ViewMeetingsActivityDiagram.puml" width="574" />
 
+
+### Star Feature
+The implementation of the star feature allows users to star specific contacts in Connectify.
+
+#### 1. Command Structure:
+* The `StarCommand` class extends the abstract class `Command`.
+* It defines a `COMMAND_WORD` which is used to invoke this specific command.
+* The `MESSAGE_USAGE` constant provides information on how to use this command, including parameters and examples.
+
+#### 2. Execution:
+* When the execute method of `StarCommand` is called, it takes a `Model` object as a parameter, which represents the application's data model.
+* It searches for the contact specified by the user within the list of contacts retrieved from the model.
+* If the contact is not found, it throws a `CommandException`.
+* If the contact is already starred, it throws a `CommandException`.
+* If the contact is found and not already starred, it sets the `starred boolean` of the contact to `true` and updates the contact in the model.
+* Finally, it returns a `CommandResult` indicating the success of the operation.
+
+#### 3. Model Update:
+* Upon successfully starring the contact, the `starredContact` object is created with the updated information, including the `starred boolean`.
+* The model's `setPerson` method is called to update the contact with the new starred status.
+* The filtered person list is then updated to reflect the changes in the model.
+
+#### 4. Error Handling:
+
+* The implementation handles various error scenarios, such as contact not found or already starred, by throwing `CommandException` with appropriate error messages.
+
+#### Design Considerations:
+* Data Consistency: The implementation ensures that the model is updated consistently after starring a contact to maintain data integrity.
+* Scalability: Depending on the size of the contact list and frequency of use, the efficiency of searching for contacts might be a consideration for optimization.
+* Flexibility: The design allows for easy extension with additional functionalities related to starring contacts, such as unstarring.
+
+The diagram below shows the activity diagram for StarCommand.
+
+<puml src="diagrams/StarCommandActivityDiagram.puml" width="574" />
+
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
@@ -317,44 +353,7 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
-### \[Proposed\] Data archiving
 
-_{Explain here how the data archiving feature will be implemented}_
-
-
-### Star Feature
-The implementation of the star feature allows users to star specific contacts in Connectify.
-
-#### 1. Command Structure:
-* The `StarCommand` class extends the abstract class `Command`.
-* It defines a `COMMAND_WORD` which is used to invoke this specific command.
-* The `MESSAGE_USAGE` constant provides information on how to use this command, including parameters and examples.
-
-#### 2. Execution:
-* When the execute method of `StarCommand` is called, it takes a `Model` object as a parameter, which represents the application's data model.
-* It searches for the contact specified by the user within the list of contacts retrieved from the model.
-* If the contact is not found, it throws a `CommandException`.
-* If the contact is already starred, it throws a `CommandException`.
-* If the contact is found and not already starred, it sets the `starred boolean` of the contact to `true` and updates the contact in the model.
-* Finally, it returns a `CommandResult` indicating the success of the operation.
-
-#### 3. Model Update:
-* Upon successfully starring the contact, the `starredContact` object is created with the updated information, including the `starred boolean`.
-* The model's `setPerson` method is called to update the contact with the new starred status.
-* The filtered person list is then updated to reflect the changes in the model.
-
-#### 4. Error Handling:
-
-* The implementation handles various error scenarios, such as contact not found or already starred, by throwing `CommandException` with appropriate error messages.
-
-#### Design Considerations:
-* Data Consistency: The implementation ensures that the model is updated consistently after starring a contact to maintain data integrity.
-* Scalability: Depending on the size of the contact list and frequency of use, the efficiency of searching for contacts might be a consideration for optimization.
-* Flexibility: The design allows for easy extension with additional functionalities related to starring contacts, such as unstarring.
-
-The diagram below shows the activity diagram for StarCommand.
-
-<puml src="diagrams/StarCommandActivityDiagram.puml" width="574" />
 
 --------------------------------------------------------------------------------------------------------------------
 
