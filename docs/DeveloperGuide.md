@@ -364,6 +364,40 @@ _{more aspects and alternatives to be added}_
 _{Explain here how the data archiving feature will be implemented}_
 
 
+### Star Feature
+The implementation of the star feature allows users to star specific contacts in Connectify.
+
+#### 1. Command Structure:
+* The `StarCommand` class extends the abstract class `Command`.
+* It defines a `COMMAND_WORD` which is used to invoke this specific command.
+* The `MESSAGE_USAGE` constant provides information on how to use this command, including parameters and examples.
+
+#### 2. Execution:
+* When the execute method of `StarCommand` is called, it takes a `Model` object as a parameter, which represents the application's data model.
+* It searches for the contact specified by the user within the list of contacts retrieved from the model.
+* If the contact is not found, it throws a `CommandException`.
+* If the contact is already starred, it throws a `CommandException`.
+* If the contact is found and not already starred, it sets the `starred boolean` of the contact to `true` and updates the contact in the model.
+* Finally, it returns a `CommandResult` indicating the success of the operation.
+
+#### 3. Model Update:
+* Upon successfully starring the contact, the `starredContact` object is created with the updated information, including the `starred boolean`.
+* The model's `setPerson` method is called to update the contact with the new starred status.
+* The filtered person list is then updated to reflect the changes in the model.
+
+#### 4. Error Handling:
+
+* The implementation handles various error scenarios, such as contact not found or already starred, by throwing `CommandException` with appropriate error messages.
+
+#### Design Considerations:
+* Data Consistency: The implementation ensures that the model is updated consistently after starring a contact to maintain data integrity.
+* Scalability: Depending on the size of the contact list and frequency of use, the efficiency of searching for contacts might be a consideration for optimization.
+* Flexibility: The design allows for easy extension with additional functionalities related to starring contacts, such as unstarring.
+
+The diagram below shows the activity diagram for StarCommand.
+
+<puml src="diagrams/StarCommandActivityDiagram.puml" width="574" />
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
@@ -698,23 +732,129 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-### Deleting a person
+### Deleting a contact
 
-1. Deleting a person while all persons are being shown
-
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+1. Deleting a contact from the addressbook
 
    1. Test case: `delete Alex Yeoh`<br>
-      Expected: Contact with the name "Alex Yeoh" is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+      Expected: Okay, Alex Yeoh's contact has been deleted.
 
    1. Test case: `delete`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+      Expected: Invalid command format! delete: Deletes the person identified by the name used in the contact list. Parameters: CONTACT_NAME
 
-   1. Other incorrect delete commands to try: `delete 0`, `delete 1`, `delete x`, `...` (where x is an integer)<br>
-      Expected: Similar to previous.
+   1. Test case: `delete nonexistent`<br>
+      Expected: Oops, nonexistent's contact does not exist.
 
-1. _{ more test cases …​ }_
+### Adding a person
 
+1. Adding a new person into the list of contacts
+   
+    1. Test case: `add n/Alex Yeo p/98765432 a/Yeo street, block 321, #02-03`<br>
+       Expected: The program will display "New person added: Alex Yeo; Phone: 98765432; Email: ; Address: Yeo street, block 321, #02-03; Tags:"
+                The new person's info will be added into the addressbook. 
+   
+    1. Test case: `add`<br>
+       Expected: Invalid command format!
+       add: Adds a person to the address book. Parameters: n/NAME p/PHONE [e/EMAIL] [a/ADDRESS] [t/TAG]...
+       EMAIL, ADDRESS and TAGs are optional. 
+   
+    1. Test case: `add Alex Tan`<br>
+       Expected: Same as above
+   
+    1. Test case: `add n/Alex Yeo p/89765432 a/Yang street, block 123, #02-01`<br>
+       Expected: The program will display "This person already exists in the address book"
+
+### Editing a contact
+
+1. Editing a contact's information.
+
+    1. Test case: `edit Alex Yeo p/91234567`<br>
+       Expected: The program will display "Edited Alex Yeo's contact." The changes made to Alex Yeo's info will be saved. 
+   
+    1. Test case: `edit Alex Yeo a/AlexDorm`<br>
+       Expected: Same as above.
+
+    1. Test case: `edit`<br>
+       Expected: The program will display "Invalid command format!
+       edit: Edits the details of the person identified by the contact name used in the displayed person list. Existing values will be overwritten by the input values. 
+       Parameters: NAME [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]..."
+   
+    1. Test case: `edit Null n/Newname`<br>
+       Expected: The program will display "Oops, Null's contact does not exist."
+    
+    1. Test case: `edit Alex Yeo n/ExistentPerson`<br>
+       Expected: The program will display "Oops, you cannot change the contact name to this. This person already exists in the address book."
+
+### Finding a contact
+
+1. Finding contacts in the addressbook by typing names/part of names. 
+
+1. Assuming 4 people, Alex Yeoh, John, Alex, and Alex Yeo, are in the addressbook.
+    
+    1. Test case: `find Alex`<br>
+       Expected: The program will display "3 persons listed!". All the info of Alex, Alex Yeo, and Alex Yeoh would appear on the screen.  
+    
+    1. Test case: `find alex`<br>
+       Expected: Same as above
+    
+    1. Test case: `find a`<br>
+       Expected: Same as above
+   
+    1. Test case: 'find Alex John'<br>
+       Expected: The program will display "4 persons listed!". All the info of Alex, Alex Yeo, Alex Yeoh, and John would appear on the screen.
+
+    1. Test case: `find b`<br>
+       Expected: The program will display "0 persons listed!"
+    
+    1. Test case: `find`<br>
+       Expected: The program will display "Invalid command format!
+       find: Finds all persons whose names contain any of the specified keywords (case-insensitive) and displays them as a list with index numbers.
+       Parameters: KEYWORD [MORE_KEYWORDS]..."
+
+### Adding a company
+
+1. Adding a company to a contact
+
+    1. Test case: `co Alex c/Alexcomp`<br>
+       Expected: The program will display "Tagged Alex's company as Alexcomp". Also, there will be a company tag named Alexcomp attributed to Alex.
+
+    1. Test case: `co Alex c/Alexcompany`<br>
+       Expected: The program will display "Changed the existing company tag for Alex's contact
+       Previous company tag: Alexcomp  
+       Updated company tag: Alexcompany". And the tag of Alex will be changed and displayed on the screen.
+    
+    1. Test case: `co`<br>
+       Expected: The program will display "Oops, please state the name of the contact".
+    
+    1. Test case: `co Alex`<br>
+       Expected: The program will display "Removed the company tag from Alex's contact".
+    
+    1. Test case: `co Nonexistent`<br>
+      Expected: The program will display "Oops, Nonexistent's contact does not exist. Unable to add company tag".
+   
+    1. Test case: `co Nonexistent c/Alexcomp`<br>
+      Expected: same as above
+
+### Finding by Company
+
+1. Finding contacts by their company 
+
+1. Assuming there are 4 people in the contact list. Alex Yeoh, Alex, and Alex Yeo are working in Company Alexcomp, and John is working in Company Johncomp.
+
+    1. Test case: `findco Alexcomp`<br>
+       Expected: The program will display "Found 3 contacts with matching company tag(s)." And the info of the three people working in Alexcomp will be displayed on the screen. 
+    
+    1. Test case: `findco Alexcomp Johncomp`<br>
+       Expected: The program will display "Found 4 contacts with matching company tag(s)." And the info of the people working in either Alexcomp or Johncomp will be displayed on the screen.
+   
+    1. Test case: `findco Nonexistent`<br>
+       Expected: The program will display "Found 0 contacts with matching company tag(s)."
+    
+    1. Test case: `findco`<br>
+       Expected: The program will display "Invalid command format!
+       findco: Finds all contacts with company tag containing the specified keywords (case-insensitive) and displays them as a list with index numbers.
+       Parameters: KEYWORD [MORE_KEYWORDS]...".
+   
 ### Saving data
 
 1. Dealing with missing/corrupted data files
@@ -722,3 +862,120 @@ testers are expected to do more *exploratory* testing.
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases …​ }_
+
+### Prioritising a contact:
+1. Assign priority to a new contact.
+
+   1. Prerequisites: Have a contact shown in the displayed contact list.
+
+   1. Test case: `pr/high John Doe`<br>
+   Expected: John Doe is assigned high priority level, a red circle appears behind the contact name. Confirmation message displayed.
+
+   1. Test case: `pr/med Jane Smith`<br>
+   Expected: Jane Smith is assigned medium priority level, an orange circle appears behind the contact name. Confirmation message displayed.
+
+   1. Test case: `pr/none Alex Tan`<br>
+   Expected: Priority level is removed from Alex Tan. Confirmation message displayed.
+
+   1. Test case: `pr/low Michael Johnson`<br>
+   Expected: Error message indicating unknown command. No changes made.
+
+2. Assign priority to a contact that is already assigned with priority.
+
+    1. Prerequisites: Have a contact shown in the displayed contact list, and John Doe is assigned high priority level.
+
+    1. Test case: `pr/med John Doe`<br>
+       Expected: John Doe is assigned medium priority level, an orange circle appears instead of the red circle. Confirmation message displayed.
+
+### Filtering contacts by priority:
+i. Prerequisites: Have contacts with different priority levels.
+
+ii. Test case: `filter-high`<br>
+Expected: List of contacts with high priority is displayed.
+
+iii. Test case: `filter-med`<br>
+Expected: List of contacts with medium priority is displayed.
+
+iv. Test case: `filter-low`<br>
+Expected: Error message indicating unknown command. No changes made.
+
+### Adding a meeting to a person:
+1. Add a meeting to a new contact.
+
+   1. Prerequisites: Have a contact shown in the displayed contact list.
+
+   1. Test case: `mtg John Doe m/Coffee meeting time/14-04-2024 1500-1600`<br>
+   Expected: A meeting named "Coffee meeting" with John Doe on 14th April 2024 from 3 PM to 4 PM is added. Confirmation message displayed.
+
+   1. Test case: `mtg Jane Smith m/Call`<br>
+   Expected: Error message indicating missing meeting time. No changes made.
+
+   1. Test case: `mtg Michael Johnson m/Team meeting time/31-02-2025 0900-1000`<br>
+   Expected: Error message indicating invalid date. No changes made.
+
+2. Change the existing meeting with a contact.
+
+   1. Prerequisites: Have a contact shown in the displayed contact list, and a meeting is added with John Doe.
+
+   1. Test case: `mtg John Doe m/interview time/23-03-2024 1600-1700`<br>
+   Expected: A meeting named "interview" with John Doe on 23rd March 2024 from 4 PM to 5 PM replaces the previous meeting.
+
+### Viewing all contacts with meetings:
+i. Test case: `viewmtgs`<br>
+Expected: List of all contacts with scheduled meetings is displayed.
+
+### Adding a remark to a person:
+
+1. Add a meeting to a new contact.
+
+   1. Prerequisites: Have a contact shown in the displayed contact list.
+
+   1. Test case: `remark John Doe r/Met at conference`<br>
+   Expected: Remark "Met at conference" is added to John Doe. Confirmation message displayed.
+
+   1. Test case: `remark Jane Smith r/`<br>
+   Expected: Remark is removed from Jane Smith. Confirmation message displayed.
+
+   1. Test case: `remark Alex Tan`<br>
+   Expected: Error message indicating missing remark description. No changes made.
+
+2. Change the existing meeting with a contact.
+
+    1. Prerequisites: Have a contact shown in the displayed contact list, and a remark is added with John Doe.
+
+    1. Test case: `remark John Doe r/Met at school`<br>
+       Expected: Remark "Met at conference" replaces the previous remark for John Doe.
+
+### Getting the number of contacts:
+i. Test case: `count`<br>
+Expected: Total number of contacts in Connectify is displayed.
+
+### Starring a contact:
+1. Add a star to a new contact.
+
+   1. Prerequisites: Have a contact shown in the displayed contact list, and the contact is not starred.
+
+   1. Test case: `star John Doe`<br>
+   Expected: John Doe is starred. A star appears behind the contact name. Confirmation message displayed.
+
+2. Add a star to a contact that is already starred.
+
+   1. Prerequisites: Have a contact shown in the displayed contact list, and Jane Smith is already starred.
+
+   1. Test case: `star Jane Smith`<br>
+   Expected: Error message indicating that the contact is already starred. No changes made.
+
+### Removing the star from a contact:
+1. Remove a star from a starred contact.
+
+    1. Prerequisites: Have a contact shown in the displayed contact list, and the contact is starred.
+
+    1. Test case: `unstar John Doe`<br>
+       Expected: Star is removed from John Doe. Confirmation message displayed.
+
+2. Remove a star from a contact that is not starred.
+
+    1. Prerequisites: Have a contact shown in the displayed contact list, and the contact is not starred.
+
+    1. Test case: `unstar Jane Smith`<br>
+       Expected: Error message indicating that the contact is not starred. No changes made.
