@@ -197,7 +197,6 @@
 
 .context-menu {
     -fx-background-color: #D9D9D9;
-    /**-fx-background-color: derive(#1d1d1d, 50%);**/
 }
 
 .context-menu .label {
@@ -206,7 +205,6 @@
 
 .menu-bar {
     -fx-background-color: #D9D9D9;
-    /**-fx-background-color: derive(#1d1d1d, 20%);**/
 }
 
 .menu-bar .label {

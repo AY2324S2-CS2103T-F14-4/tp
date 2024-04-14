@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.List;
 
@@ -28,6 +29,16 @@ public class StarCommandTest {
     public void execute_contactNotFound_throwsCommandException() {
         StarCommand starCommand = new StarCommand("Nonexistent Contact");
         assertCommandFailure(starCommand, model, "Error! Contact not found: Nonexistent Contact");
+    }
+
+    @Test
+    public void execute_alreadyStarred_throwsCommandException() {
+        Person personToStar = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        personToStar.starContact();
+        StarCommand starCommand = new StarCommand(personToStar.getName().fullName);
+
+        assertCommandFailure(starCommand, model, "Error! Contact is already starred: "
+                + personToStar.getName().fullName);
     }
 
     @Test

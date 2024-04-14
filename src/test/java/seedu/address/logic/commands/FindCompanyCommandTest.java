@@ -48,7 +48,7 @@ public class FindCompanyCommandTest {
         // null -> returns false
         assertFalse(findFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different command -> returns false
         assertFalse(findFirstCommand.equals(findSecondCommand));
     }
 

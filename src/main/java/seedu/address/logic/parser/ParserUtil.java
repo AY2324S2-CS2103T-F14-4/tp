@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -106,7 +107,7 @@ public class ParserUtil {
     public static LocalTime parseTime(String timeString) {
         requireNonNull(timeString);
         String trimmedTimeString = timeString.trim();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm").withResolverStyle(ResolverStyle.STRICT);
         LocalTime time = LocalTime.parse(trimmedTimeString, formatter);
         return time;
     }
@@ -119,7 +120,7 @@ public class ParserUtil {
     public static LocalDate parseDate(String dateString) {
         requireNonNull(dateString);
         String trimmedDateString = dateString.trim();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-uuuu").withResolverStyle(ResolverStyle.STRICT);
         LocalDate date = LocalDate.parse(trimmedDateString, formatter);
         return date;
     }

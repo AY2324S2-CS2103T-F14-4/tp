@@ -19,7 +19,7 @@ understanding of how to navigate and utilize Connectify's features effectively.
 
 Here is a brief overview of our key features:
 
-- Adding a company tag to a contact and finding contacts by their company tag
+- Adding a company attribute to a contact and finding contacts by their company
 - Setting priority levels for contacts and filtering contact by a certain priority level
 - Adding a meeting to a contact and viewing all meetings scheduled
 
@@ -74,10 +74,10 @@ and use the features in Connectify.
 
 1. Ensure you have Java `11` or above installed in your Computer. <br>
 How to check?
-   1. Open Command Prompt (for Windows) or Terminal (for MacOS)
+   1. Open Command Prompt (for Windows) or Terminal (for MacOS).
    2. Type the command `java -version` to check the version of java installed on your computer. <br>
    It should look like this: <br>
-      ![checkJavaVersion](images/checkJavaVersion.png)
+      ![checkJavaVersion.png](images/checkJavaVersion.png)
    3. If your java version installed is java 11 or above, move on to the next step! Else, download java version 11 [here](https://www.oracle.com/sg/java/technologies/downloads/#java11),
    before continuing to the next step.
 
@@ -86,8 +86,10 @@ How to check?
 1. Copy the file to the folder you want to use as the _home folder_ for your Connectify application.
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar connectify.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br><br>
    ![Ui](images/Ui.png)
+
+<div style="page-break-after: always;"></div>
 
 1. Type the command in the command box and press 'Enter' on your keyboard to execute it. e.g. typing **`help`** and pressing 'Enter' will open the help window.<br>
    Some example commands you can try:
@@ -117,13 +119,23 @@ Attribute  | Description                                |  Required
 **Email** | Email of the contact                       | No   
 **Address**   | Address of the contact                     | No   
 **Tag**   | Categories to sort the contact under       | No
-**Company Tag**  | Company of the contact                     | No
+**Company**  | Company of the contact                     | No
 **Priority**  | Level of priority, from NONE, MED and HIGH | No  
 **Remark** | Note added to a contact                    | No
 **Meeting**  | Scheduled meeting with a contact with a specified date and time | No                                 
 **Star**   | Importance of contact  | No  
 
 --------------------------------------------------------------------------------------------------------------------
+
+<div style="page-break-after: always;"></div>
+
+## Connectify Overview
+
+![Connectify Overview](images/ConnectifyOverview.png)
+
+## Contact Card View
+
+![Contact Card View](images/ContactCardView.png)
 
 <div style="page-break-after: always;"></div>
 
@@ -169,16 +181,31 @@ Format: `add n/NAME p/PHONE_NUMBER [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
 **Note:** In Connectify, contact names are case-insensitive and no duplicates are allowed. Hence `John Lim` is considered to be the
 same person as `john lim`. As a result, you will see an error message if you try to add a contact with the same name as an existing contact,
-even if it is in different case.
+even if it is in different case. Adding a contact with the same name as an existing contact, with extra spaces,
+will produce a warning but does not prevent the user from doing so.
+</box>
+<box type="info" seamless>
+
+**Note:** A person's name can only contain alphanumeric characters. Special characters are not allowed. 
+The maximum length of a person's name is 50 characters. <br>
+</box>
+<box type="info" seamless>
+
+**Note:** We allow duplicate phone number and email for contacts. This is to allow flexibility in using this feature
+as some contacts may share the same general company email or phone number and not provide their personal information.
 </box>
 <box type="tip" seamless>
 
-**Tip:** A person's email and address are optional. A person can have any number of tags (including 0). <br>
+**Tip:** A person's email and address are optional. 
+Placeholders `[email]` and `[address]` will be displayed if none are provided. <br>
+A person can have any number of tags (including 0). <br>
 </box>
 
 Examples:
 * `add n/John Doe p/98765432 a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/recruiter e/betsycrowe@example.com a/Betsy street, block 456, #02-02 p/1234567`
+
+<div style="page-break-after: always;"></div>
 
 ### Listing all persons : `list`
 
@@ -188,7 +215,7 @@ Format: `list`
 
 ### Editing a person : `edit`
 
-Edits an existing contact in Connectify.
+Edits an existing contact shown in the displayed contact list.
 
 Format: `edit NAME [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
@@ -223,13 +250,12 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 Examples:
 * `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br><br>
-
+* `find james betsy` returns `James Lee`, `Betsy Crowe`<br>
   ![result for 'find james betsy'](images/findJamesBetsyResult.png)
 
 ### Deleting a person : `delete`
 
-Deletes the specified contact from Connectify.
+Deletes the specified contact shown in the displayed contact list.
 
 Format: `delete NAME`
 
@@ -239,54 +265,61 @@ Format: `delete NAME`
 Examples:
 * `delete Betsy` deletes the contact with the contact name `Betsy` in Connectify.
 
-### Adding a company tag to a contact : `co`
+### Adding a company attribute to a contact : `co`
 
-Tags the specified company name to the specified contact.
+Tags the specified company name to the specified contact shown in the displayed contact list.
 
 Format: `co NAME c/COMPANY_NAME`
 
 <box type="info" seamless>
 
-**Note:** Each contact is only allowed to have one company tag. If the contact already has an existing company tag, 
-the company tag will be updated to the new one and a message will inform you the previous and updated company tag.<br>
+**Note:** Each contact is only allowed to have one company attribute. If the contact already has an existing company attribute, 
+the company attribute will be updated to the new one and a message will inform you the previous and updated company.<br>
 </box>
 
-* Tags the company name to the person's contact. The specified `NAME` of the contact to add the company tag is 
+* Tags the company name to the person's contact. The specified `NAME` of the contact to add the company attribute is 
 case-insensitive. e.g `co John Doe c/TikTok` is the same as `co john doe c/TikTok`
 * Entering `co NAME c/`, leaving the `COMPANY_NAME` as empty, will remove the company 
 tag from a person's contact. <br>
-If the person's contact did not have a company tag and `co NAME c/` is entered, an error message will appear and the
+If the person's contact did not have a company attribute and `co NAME c/` is entered, an error message will appear and the
 person's contact will remain the same.
 
 
 Examples:
-* `co Betsy c/Google` adds the company tag `Google` to the contact name `Betsy` in Connectify.
-* `co Alex c/` removes the company tag from the contact name `Alex` in Connectify.
+* `co Betsy c/Google` adds the company attribute `Google` to the contact name `Betsy` in Connectify.
+* `co Alex c/` removes the company attribute from the contact name `Alex` in Connectify.
 
-### Locating persons by company tag : `findco`
+### Locating persons by company : `findco`
 
-Finds contacts whose company tag exactly matches the specified keyword.
+Finds contacts whose company attribute exactly matches the specified keyword.
 
 Format: `findco KEYWORD`
 
-* Finds contacts by the company tag. The specified `KEYWORD` is
+* Finds contacts by the company. The specified `KEYWORD` is
   case-insensitive. e.g `findco TikTok` is the same as `findco tiktok`
 * The specified keyword has to be exactly the same as the person's company 
-tag for the person to be found <br> e.g. the keyword `goog` will not match the company tag `google`
+tag for the person to be found <br> e.g. the keyword `goog` will not match the company `google`
 
 Examples:
-* `findco Google` returns `John Lim`, who has a company tag of `Google` in Connectify.<br>
+* `findco Google` returns `John Lim`, who has a company attribute of `Google` in Connectify.<br>
   ![result for 'findco Google'](images/findcoGoogle.png)
+
+<div style="page-break-after: always;"></div>
 
 ### Prioritising a contact : `pr/PRIORITY_LEVEL`
 
-Assigns the specified priority level to the specified contact or removes the priority level from the specified contact.
+Assigns the specified priority level to the specified contact or removes the priority level from the specified contact
+shown in the displayed contact list. <br>
+This command is aimed at assigning formal priority levels to contacts based on their importance or urgency.
+Priorities help you manage your contacts in a more structured way,
+especially in professional or organizational settings.
 
 Format: `pr/PRIORITY_LEVEL NAME`
 
 * The specified `NAME` of the contact to assign the priority level to is case-insensitive. <br>
 e.g `pr/high Alex Tan` is the same as `pr/high alex tan`
-* Acceptable values for PRIORITY_LEVEL are `high`, `med` and `none`
+* Acceptable values for `PRIORITY_LEVEL` are `high`, `med` and `none`. Entering any other values would 
+be considered unknown commands.
 * `pr/high NAME` assigns the `high` priority level to the specified contact.
 * `pr/med NAME` assigns the `medium` priority level to the specified contact.
 * `pr/none NAME` removes the priority level from the specified contact. <br>
@@ -299,11 +332,13 @@ Examples:
 
 ### Filtering contacts by priority : `filter-PRIORITY_LEVEL`
 
-Filters the contacts in Connecitfy by the specified priority level.
+Filters the contacts in Connectify by the specified priority level.
 
 Format: `filter-PRIORITY_LEVEL`
 
-* Acceptable values for PRIORITY_LEVEL are high and med.
+* Acceptable values for `PRIORITY_LEVEL` are high and med.
+* As the purpose of filtering by priority is so that users can easily identify 
+and focus on only important contacts, filtering by priority level `none` is not an option.
 
 Examples:
 * `filter-high` returns a list of contacts with high priority.
@@ -311,7 +346,7 @@ Examples:
 
 ### Adding a meeting to a person : `mtg`
 
-Adds a meeting with a description and a date and time to the specified person in Connecitfy.
+Adds a meeting with a description and a date and time to the specified person shown in the displayed contact list.
 
 Format: `mtg NAME m/MEETING_DESCRIPTION time/MEETING_TIME`
 
@@ -320,12 +355,20 @@ Format: `mtg NAME m/MEETING_DESCRIPTION time/MEETING_TIME`
 **Note:** Each contact is only allowed to have one meeting. If the contact already has an existing meeting, 
 the meeting details will be updated to the new one and a message will inform you the previous and updated meeting details.<br>
 </box>
+<box type="info" seamless>
+
+**Note:** For now, users are allowed to set meeting dates that has passed. This is to provide users with flexibility in using
+this feature. If you wish to use the meetings function to remember meetings that you had with a contact, you are able to
+do so as well.<br>
+</box>
 
 * The specified NAME of the contact is case-insensitive. <br>
 e.g `mtg john lim m/interview time/23-03-2024 1600-1700` is 
 the same as `mtg John Lim m/interview time/23-03-2024 1600-1700`
 * The specified MEETING_TIME must be of the format dd-MM-YYYY HHmm-HHmm.
-* Entering `mtg NAME m/` removes the meeting from the specified contact. <br>
+* Note that the date specified has to be valid. For instance entering a date 31-02-2025 (31st february does not exist)
+will throw an error.
+* Entering `mtg NAME m/` or `mtg NAME` removes the meeting from the specified contact. <br>
 If the person's contact did not have a meeting and `mtg NAME m/` is entered, 
 an error message will appear and the person's contact will remain the same. 
 * If `MEETING_DESCRIPTION` is entered, entering `MEETING_TIME` is mandatory.
@@ -342,11 +385,11 @@ Format: `viemtgs`
 
 ### Adding a remark to a person : `remark`
 
-Adds the specified remark to the specified contact.
+Adds the specified remark to the specified contact shown in the displayed contact list.
 
 Format: `remark NAME r/REMARK_DESCRIPTION`
 
-* The specified `NAME` of the contact to add the company tag is case-insensitive. <br>
+* The specified `NAME` of the contact to add the company attribute is case-insensitive. <br>
 e.g `remark John Doe r/met him at the career fair` is the 
 same as `remark john doe r/met him at the career fair`
 * Entering `remark NAME r/`, leaving the `REMARK_DESCRIPTION` as empty, will remove the remark
@@ -365,8 +408,10 @@ Shows the total number of contacts you have in Connecitfy.
 Format: `count`
 
 ### Starring a contact : `star`
-
-Stars the specified contact in Connecitfy.
+Stars the specific contact shown in the displayed contact list. <br>
+The star command is designed to mark a contact with a star, indicating informal significance or personal preference.
+It's a way to highlight certain contacts that you consider important or frequently interact with, such as close friends,
+and frequent collaborators.
 
 Format: `star NAME`
 
@@ -378,7 +423,7 @@ Examples:
 
 ### Removing the star from a contact : `unstar`
 
-Removes the star from the specified contact in Connecitfy.
+Removes the star from the specified contact shown in the displayed contact list.
 
 Format: `unstar NAME`
 
@@ -402,6 +447,23 @@ Exits the program.
 
 Format: `exit`
 
+### Go to previous commands: Press Arrow Up button / Press Arrow Down button on your computer keyboard
+
+Suppose the commands entered are: 
+Command 1: list
+Command 2: edit John Doe n/John
+Command 3: edit Alex Yeoh p/23456789
+
+After executing Command 3,  
+Pressing the arrow up button once will display: edit Alex Yeoh p/23456789
+Pressing the arrow up button again will display: edit John Doe n/John
+Pressing the arrow up button once more will display: list
+Further pressing the arrow up button will not change the command box content as it reaches the earliest command.
+
+After navigating up, pressing arrow down button once will display: edit John Doe n/John
+Pressing arrow down button again will display: edit Alex Yeoh p/23456789
+Further pressing the arrow down button will not change the command box content as it reaches the latest command.
+
 ### Saving the data
 
 The address book data is saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
@@ -417,9 +479,6 @@ If your changes to the data file makes its format invalid, Connectify will disca
 Furthermore, certain edits can cause Connectify to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -436,6 +495,9 @@ _Details coming soon ..._
 
 **Q**: How do I handle data storage and saving?<br>
 **A**: Connectify automatically saves contact data to a JSON file located in the same directory as the jar file. There's no need to save manually as changes are saved automatically.
+
+**Q**: What's the difference between the purpose of Priority and Star command?<br>
+**A**: Priority levels are used for formal categorization and organization of contacts based on their importance or urgency. Stars are typically used for personal preference rather than formal categorization. You might star contacts you frequently communicate with or those you consider important in a personal context.
 
 --------------------------------------------------------------------------------------------------------------------
 

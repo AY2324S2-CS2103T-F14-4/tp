@@ -21,7 +21,7 @@ Class Phone
 Class Company
 Class Priority
 Class Tag
-Class Note
+Class Remark
 
 Class I #FFFFFF
 }
@@ -47,7 +47,8 @@ Person *--> "*" Address
 Person *--> "*" Company
 Person *--> "*" Priority
 Person *--> "*" Tag
-Person *--> "*" Note
+Person *--> "*" Remark
+
 Person : starred: Boolean
 
 Person -[hidden]up--> I

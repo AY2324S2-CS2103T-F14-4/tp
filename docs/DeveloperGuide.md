@@ -4,7 +4,7 @@
   pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# Connectify Developer Guide
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -13,7 +13,7 @@
 
 ## **Acknowledgements**
 
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+This project was adapted from AddressBook Level 3 (AB-3).
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -283,29 +283,70 @@ _{Explain here how the data archiving feature will be implemented}_
 **Value proposition**: Tailored specifically for computing students, our team project, Connectify, optimises networking for future career opportunities. Connectify seamlessly organises contact details, efficiently manages professional relationships and simplifies event and meeting planning. Designed for seamless usage via Command Line Interface (CLI), Connectify’s ease of use sets up computing students for success.
 
 
+## **Appendix: Planned Enhancements**
+Team size: 5
+
+1. **Change priority command format to be more consistent with the other commands.** <br>
+The current priority command format is
+`pr/PRIORITY_LEVEL NAME`. We plan to change the format to `pr NAME pr/PRIORITY_LEVEL`, to match the formats of our other commands.
+2. **Add priority level low** <br>
+Currently, we only allow users to assign their contacts priority levels high and medium.
+We plan to add and allow users to assign their contacts with the priority level low.
+3. **Allow users to filter by low and no priority** <br>
+Users are only allowed to filter by priority high and medium currently.
+We plan to allow users to filter by no priority and also by low priority (see point 2). This is to provide users with more
+convenient information for them to prioritise their networking efforts accordingly.
+4. **Disallow users from adding meetings with timings where the end time is earlier than the start time** <br>
+Currently, if users try to add a meeting with the timing where they specify the end time to be earlier than the start time, no error is raised.
+We plan to introduce an error when users accidentally use the function this way. This is to prevent misuse of the function
+as it would typically be illogical to have an end time earlier than the start.
+5. **Enforce stricter constraints on email input for add and edit command** <br>
+The current implementation of add and edit command only checks for the @domain. 
+We plan to ensure that the email address input for the add and edit command follows 
+the standard internet email address conventions strictly, which is to have a compulsory top-level domain (TLD). Hence, we
+plan to introduce additional checks for email inputs without a top-level domain and raise an error. This is to prevent users
+from accidentally adding an incorrect email.
+6. **Allow users to perform commands on contacts that are not currently listed/displayed** <br>
+Currently, after running some commands like `find` and `findco` where the displayed contact list is narrowed down, running other commands will only execute it on the
+currently displayed list. As a result, for users to use the commands accurately and effectively, they currently need to run
+the `list` command before running other commands to execute it on the entire contact list, which is inconvenient. Hence, we
+plan to allow users to perform commands on contacts, based on names that are independent to the list that is filtered/displayed.
+7. **Allow contact name inputs to include characters like '/'** <br>
+Our current implementation of add and edit command does not
+allow for special characters and only allows alphanumeric characters. We plan to allow the name input for add and edit command
+to include special characters like '/' for inclusivity as some names have it.
+8. **Allow duplicate contact names if they have different attributes** <br>
+Currently, we do not allow duplicate contact names at all,
+and names are case-insensitive (as in real life). However, we do note that while rare, some people may have the same exact name.
+Hence, in consideration of this, we plan to allow duplicate contact names if they have different attributes
+(e.g different company) in future versions.
+9. **More consistent error messages throughout application** <br>
+In our current implementation of the features, error messages
+for incorrect command usage varies across different commands. Hence, we plan to modify error messages for incorrect command usage
+to ensure cohesiveness and consistency throughout the application, to provide more clarity to users.
+
+
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​           | I want to …​                                                                                              | So that I can…​                                                                      |
-|----------|-------------------|-----------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
-| `* * *`  | user              | add a new contact easily                                                                                  |                                                                                      |
-| `* * *`  | user              | edit the details that I’ve added                                                                          | my application will contain the most updated and accurate information                |
-| `* * *`  | user              | list all my contacts                                                                                      | remember whom I’ve met at a glance                                                   |
-| `* * *`  | user              | delete a contact                                                                                          | only keep those that are necessary                                                   |
-| `* * *`  | user              | undo my most recently added entry                                                                         | quickly delete that entry if I had made a mistake                                    |
-| `* *`    | computing student | categorise the people I meet into interns, recruiters, alumni, students, professors, employees and others | remember the people whom I’ve met and easily find them again                         |
-| `* *`    | computing student | search a contact using key word                                                                           | find the contact quickly                                                             |
-| `* *`    | user              | add a meeting with my contact                                                                             | know when to meet with the conatct                                                   |
-| `* *`    | user              | find all meetings                                                                                         | know who I will be meeting with                                                      |
-| `* *`    | user              | differentiate which companies my professional contacts are from                                           | know which company I am connecting with                                              |
-| `* *`    | user              | find my contacts by company                                                                               | easily find the contacts from the company I want                                     |
-| `* *`    | computing student | assign priority levels to my contacts                                                                     | prioritise certain contacts in my network who would be more beneficial for my career |
-| `*`      | computing student | filter my contacts by priority                                                                            | identify high-priority contacts at a glance                                          |
-| `*`      | user              | have a "favourites" or "star" feature for important contacts                                              | easily access them without scrolling through the entire list                         |
-| `*`      | user              | know the number of contacts quickly                                                                       | get a sensing of how many people are in my network                                   |
-| `*`      | user              | unstar a contact                                                                                          |                                                                                      |
-| `*`      | user              | remove priority from a contact                                                                            |                                                                                      |
+| Priority | As a …​           | I want to …​                                                    | So that I can…​                                                                      |
+|----------|-------------------|-----------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| `* * *`  | user              | add a new contact easily                                        |                                                                                      |
+| `* * *`  | user              | edit the details that I’ve added                                | my application will contain the most updated and accurate information                |
+| `* * *`  | user              | list all my contacts                                            | remember whom I’ve met at a glance                                                   |
+| `* * *`  | user              | delete a contact                                                | only keep those that are necessary                                                   |
+| `* *`    | computing student | search a contact using key word                                 | find the contact quickly                                                             |
+| `* *`    | user              | add a meeting with my contact                                   | know when to meet with the contact                                                   |
+| `* *`    | user              | find all meetings                                               | know who I will be meeting with                                                      |
+| `* *`    | user              | differentiate which companies my professional contacts are from | know which company I am connecting with                                              |
+| `* *`    | user              | find my contacts by company                                     | easily find the contacts from the company I want                                     |
+| `* *`    | computing student | assign priority levels to my contacts                           | prioritise certain contacts in my network who would be more beneficial for my career |
+| `*`      | computing student | filter my contacts by priority                                  | identify high-priority contacts at a glance                                          |
+| `*`      | user              | have a "favourites" or "star" feature for important contacts    | easily access them without scrolling through the entire list                         |
+| `*`      | user              | know the number of contacts quickly                             | get a sensing of how many people are in my network                                   |
+| `*`      | user              | unstar a contact                                                |                                                                                      |
+| `*`      | user              | remove priority from a contact                                  |                                                                                      |
 
 
 ### Use cases
@@ -591,3 +632,120 @@ testers are expected to do more *exploratory* testing.
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases …​ }_
+
+### Prioritising a contact:
+1. Assign priority to a new contact.
+
+   1. Prerequisites: Have a contact shown in the displayed contact list.
+
+   1. Test case: `pr/high John Doe`<br>
+   Expected: John Doe is assigned high priority level, a red circle appears behind the contact name. Confirmation message displayed.
+
+   1. Test case: `pr/med Jane Smith`<br>
+   Expected: Jane Smith is assigned medium priority level, an orange circle appears behind the contact name. Confirmation message displayed.
+
+   1. Test case: `pr/none Alex Tan`<br>
+   Expected: Priority level is removed from Alex Tan. Confirmation message displayed.
+
+   1. Test case: `pr/low Michael Johnson`<br>
+   Expected: Error message indicating unknown command. No changes made.
+
+2. Assign priority to a contact that is already assigned with priority.
+
+    1. Prerequisites: Have a contact shown in the displayed contact list, and John Doe is assigned high priority level.
+
+    1. Test case: `pr/med John Doe`<br>
+       Expected: John Doe is assigned medium priority level, an orange circle appears instead of the red circle. Confirmation message displayed.
+
+### Filtering contacts by priority:
+i. Prerequisites: Have contacts with different priority levels.
+
+ii. Test case: `filter-high`<br>
+Expected: List of contacts with high priority is displayed.
+
+iii. Test case: `filter-med`<br>
+Expected: List of contacts with medium priority is displayed.
+
+iv. Test case: `filter-low`<br>
+Expected: Error message indicating unknown command. No changes made.
+
+### Adding a meeting to a person:
+1. Add a meeting to a new contact.
+
+   1. Prerequisites: Have a contact shown in the displayed contact list.
+
+   1. Test case: `mtg John Doe m/Coffee meeting time/14-04-2024 1500-1600`<br>
+   Expected: A meeting named "Coffee meeting" with John Doe on 14th April 2024 from 3 PM to 4 PM is added. Confirmation message displayed.
+
+   1. Test case: `mtg Jane Smith m/Call`<br>
+   Expected: Error message indicating missing meeting time. No changes made.
+
+   1. Test case: `mtg Michael Johnson m/Team meeting time/31-02-2025 0900-1000`<br>
+   Expected: Error message indicating invalid date. No changes made.
+
+2. Change the existing meeting with a contact.
+
+   1. Prerequisites: Have a contact shown in the displayed contact list, and a meeting is added with John Doe.
+
+   1. Test case: `mtg John Doe m/interview time/23-03-2024 1600-1700`<br>
+   Expected: A meeting named "interview" with John Doe on 23rd March 2024 from 4 PM to 5 PM replaces the previous meeting.
+
+### Viewing all contacts with meetings:
+i. Test case: `viewmtgs`<br>
+Expected: List of all contacts with scheduled meetings is displayed.
+
+### Adding a remark to a person:
+
+1. Add a meeting to a new contact.
+
+   1. Prerequisites: Have a contact shown in the displayed contact list.
+
+   1. Test case: `remark John Doe r/Met at conference`<br>
+   Expected: Remark "Met at conference" is added to John Doe. Confirmation message displayed.
+
+   1. Test case: `remark Jane Smith r/`<br>
+   Expected: Remark is removed from Jane Smith. Confirmation message displayed.
+
+   1. Test case: `remark Alex Tan`<br>
+   Expected: Error message indicating missing remark description. No changes made.
+
+2. Change the existing meeting with a contact.
+
+    1. Prerequisites: Have a contact shown in the displayed contact list, and a remark is added with John Doe.
+
+    1. Test case: `remark John Doe r/Met at school`<br>
+       Expected: Remark "Met at conference" replaces the previous remark for John Doe.
+
+### Getting the number of contacts:
+i. Test case: `count`<br>
+Expected: Total number of contacts in Connectify is displayed.
+
+### Starring a contact:
+1. Add a star to a new contact.
+
+   1. Prerequisites: Have a contact shown in the displayed contact list, and the contact is not starred.
+
+   1. Test case: `star John Doe`<br>
+   Expected: John Doe is starred. A star appears behind the contact name. Confirmation message displayed.
+
+2. Add a star to a contact that is already starred.
+
+   1. Prerequisites: Have a contact shown in the displayed contact list, and Jane Smith is already starred.
+
+   1. Test case: `star Jane Smith`<br>
+   Expected: Error message indicating that the contact is already starred. No changes made.
+
+### Removing the star from a contact:
+1. Remove a star from a starred contact.
+
+    1. Prerequisites: Have a contact shown in the displayed contact list, and the contact is starred.
+
+    1. Test case: `unstar John Doe`<br>
+       Expected: Star is removed from John Doe. Confirmation message displayed.
+
+2. Remove a star from a contact that is not starred.
+
+    1. Prerequisites: Have a contact shown in the displayed contact list, and the contact is not starred.
+
+    1. Test case: `unstar Jane Smith`<br>
+       Expected: Error message indicating that the contact is not starred. No changes made.

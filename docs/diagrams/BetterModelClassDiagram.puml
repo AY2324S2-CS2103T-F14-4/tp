@@ -26,6 +26,6 @@ Person *--> "0..1" Address
 Person *--> "0..1" Company
 Person *--> "0..1" Meeting
 Person *--> "0..1" Priority
-Person *--> "0..1" Note
+Person *--> "0..1" Remark
 Person : starred: Boolean
 @enduml

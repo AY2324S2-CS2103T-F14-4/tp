@@ -47,6 +47,10 @@ public class StarCommand extends Command {
             throw new CommandException("Error! Contact not found: " + contactName);
         }
 
+        if (contactToStar.isStarred()) {
+            throw new CommandException("Error! Contact is already starred: " + contactName);
+        }
+
         // Star the contact
         contactToStar.starContact();
 
