@@ -812,14 +812,6 @@ testers are expected to do more *exploratory* testing.
        Expected: The program will display "Invalid command format!
        findco: Finds all contacts with company tag containing the specified keywords (case-insensitive) and displays them as a list with index numbers.
        Parameters: KEYWORD [MORE_KEYWORDS]...".
-   
-### Saving data
-
-1. Dealing with missing/corrupted data files
-
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
-
-1. _{ more test cases …​ }_
 
 ### Prioritising a contact:
 1. Assign priority to a new contact.
@@ -846,15 +838,15 @@ testers are expected to do more *exploratory* testing.
        Expected: John Doe is assigned medium priority level, an orange circle appears instead of the red circle. Confirmation message displayed.
 
 ### Filtering contacts by priority:
-i. Prerequisites: Have contacts with different priority levels.
+1. Prerequisites: Have contacts with different priority levels.
 
-ii. Test case: `filter-high`<br>
+2. Test case: `filter-high`<br>
 Expected: List of contacts with high priority is displayed.
 
-iii. Test case: `filter-med`<br>
+3. Test case: `filter-med`<br>
 Expected: List of contacts with medium priority is displayed.
 
-iv. Test case: `filter-low`<br>
+4. Test case: `filter-low`<br>
 Expected: Error message indicating unknown command. No changes made.
 
 ### Adding a meeting to a person:
@@ -879,8 +871,19 @@ Expected: Error message indicating unknown command. No changes made.
    Expected: A meeting named "interview" with John Doe on 23rd March 2024 from 4 PM to 5 PM replaces the previous meeting.
 
 ### Viewing all contacts with meetings:
-i. Test case: `viewmtgs`<br>
-Expected: List of all contacts with scheduled meetings is displayed.
+1. View all contacts with meetings.
+
+   1. Prerequisites: Have contacts with meetings.
+
+   1. Test case: `viewmtgs`<br>
+   Expected: List of all contacts with scheduled meetings is displayed.
+
+2. No contact found with meetings.
+
+   1. Prerequisites: There is no meeting added to any existing contact.
+
+   1. Test case: `viewmtgs`<br>
+      Expected: Error message indicating that no contact found with meetings.
 
 ### Adding a remark to a person:
 
@@ -905,7 +908,7 @@ Expected: List of all contacts with scheduled meetings is displayed.
        Expected: Remark "Met at conference" replaces the previous remark for John Doe.
 
 ### Getting the number of contacts:
-i. Test case: `count`<br>
+1. Test case: `count`<br>
 Expected: Total number of contacts in Connectify is displayed.
 
 ### Starring a contact:
