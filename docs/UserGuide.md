@@ -85,7 +85,10 @@ How to check?
 
 1. Copy the file to the folder you want to use as the _home folder_ for your Connectify application.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar connectify.jar` command to run the application.<br>
+1. Open a command terminal, `cd` into the folder you put the jar file in. `cd` stands for "change directory". 
+The `cd` command changes the current working directory to the specified directory. 
+
+1. Next, use the `java -jar connectify.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br><br>
    ![Ui](images/Ui.png)
 
