@@ -163,6 +163,22 @@ This section describes some noteworthy details on how certain features are imple
 The company attribute is kept as a String and each Person has a company attribute, which is initialised as an empty String
 and only added on later to the contact with the `co NAME c/COMPANY_NAME` command.
 
+Step 1. When the execute method of CompanyCommand is called, it takes in a Model object as a parameter. We check whether the 
+contactName of the CompanyCommand object is an empty string. If it is, we will throw a CommandException, else we continue. <br>
+Step 2. We will get the List<Person> representing the contacts in Connectify with `model.getFilteredPersonList()` and iterate
+through it to check for the contact in Connectify with the corresponding contactName. If we do not find a matching person, 
+we throw a CommandException that the contact does not exist in Connectify. <br>
+Step 3. Check whether the CompanyCommand object's company variable is an empty String. If it is, this means that it is a
+remove company command. Otherwise, it is an add company command.<br>
+Step 4. If it is a remove company command, check whether the contact currently has an existing company attribute. If there is
+currently no company attribute, we set the message to be displayed as MESSAGE_DELETE_COMPANY_FAILURE. Else, we set the message
+as MESSAGE_DELETE_COMPANY_SUCCESS. <br>
+Step 5. If it is an add company command, we set the message to be displayed as MESSAGE_ADD_COMPANY_SUCCESS.<br>
+Step 6. Create a new updatedPerson Person object with the updated company attribute. <br>
+Step 7. Set the Person personToEdit to the new updatedPerson Person object in the model, with `model.setPerson(personToEdit, editedPerson)`.<br>
+Step 8. Update the filteredPersonsList to display all contacts and the updated information by calling `model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS)`<br>
+Step 9. Return the CommandResult with the corresponding message.
+
 The adding of a company attribute to a contact follows the following activity diagram.
 
 <puml src="diagrams/CompanyCommandActivityDiagram.puml" alt="CompanyCommandActivityDiagram"/>
@@ -183,10 +199,13 @@ of AB-3's find feature and modified it to cater to the company attribute. We act
 by partial words rather than full words, as it would increase user convenience. However, for the find by company feature, 
 it works by matching full words rather than partial words.
 
-We created a CompanyContainsKeywordsPredicate that checks whether the contacts in Connectify have company attributes that match
-the keywords inputted. We create the CompanyContainsKeywordsPredicate object with the company keywords inputted in the
-FindCompanyCommandParser. Then, in the FindCompanyCommand, we update the filtered list with the given CompanyContainsKeywordsPredicate
-and check if the updated list is empty. If the updated list is empty. We will throw an error message to display to the user.
+Step 1. FindCompanyCommandParser object's `parse` function is called and creates a CompanyContainsKeywordsPredicate object, that checks
+whether the contacts in Connectify have company attributes that match the keywords inputted. <br>
+Step 2. FindCompanyCommand is created, with the corresponding CompanyContainsKeywordsPredicate object. <br>
+Step 3. FindCompanyCommand's `execute(model)` method is called and we update the filtered persons list by calling `model.updateFilteredPersonList(predicate)`,
+with the predicate being the CompanyContainsKeywordsPredicate. This is to get the contacts with the matching company attributes.<br>
+Step 4. Get the count of matching contacts by calling `model.getFilteredPersonList().size()`.<br>
+Step 5. Return the CommandResult with the corresponding number of matching contacts.
 
 The feature flow follows the following sequence diagram.
 
@@ -204,6 +223,22 @@ The meeting attribute of an object is kept as a Meeting object with 4 attributes
 a LocalTime start and a LocalTime end. A Meeting object is initialized with 4 Strings, the meeting description, date, start and end
 time. For our current implementation, each contact is only allowed to have one meeting object.
 
+Step 1. When the execute method of AddMeetingCommand is called, it takes in a Model object as a parameter. We check whether the
+contactName of the AddMeetingCommand object is an empty string. If it is, we will throw a CommandException, else we continue. <br>
+Step 2. We will get the List<Person> representing the contacts in Connectify with `model.getFilteredPersonList()` and iterate
+through it to check for the contact in Connectify with the corresponding contactName. If we do not find a matching person,
+we throw a CommandException that the contact does not exist in Connectify. <br>
+Step 3. Check whether the AddMeetingCommand object's meeting variable is an empty String. If it is, this means that it is a
+remove meeting command. Otherwise, it is an add meeting command.<br>
+Step 4. If it is a remove meeting command, check whether the contact currently has an existing meeting attribute. If there is
+currently no meeting attribute, we set the message to be displayed as MESSAGE_DELETE_MEETING_FAILURE. Else, we set the message
+as MESSAGE_DELETE_MEETING_SUCCESS. <br>
+Step 5. If it is an add meeting command, we set the message to be displayed as MESSAGE_ADD_MEETING_SUCCESS.<br>
+Step 6. Create a new updatedPerson Person object with the updated meeting attribute. <br>
+Step 7. Set the Person personToEdit to the new updatedPerson Person object in the model, with `model.setPerson(personToEdit, editedPerson)`.<br>
+Step 8. Update the filteredPersonsList to display all contacts and the updated information by calling `model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS)`<br>
+Step 9. Return the CommandResult with the corresponding message.
+
 The adding of a meeting attribute to a contact follows the following sequence diagram.
 
 <puml src="diagrams/AddMeetingCommandSequenceDiagram.puml" alt="AddMeetingCommandSequenceDiagram" />
@@ -219,6 +254,13 @@ as Strings, and parse it into LocalDate and LocalTime in the initialization itse
 ### View meetings feature
 The view meetings feature works in a simple way by filtering the contact list in Connectify by whether the meeting attribute of
 the person is empty or not. The whole implementation is done in the ViewMeetingCommand.
+
+Step 1. When the execute method of ViewMeetingCommand is called, it takes in a Model object as a parameter. We filter
+the persons list by whether their meeting attribute is 'empty' (meeting.toString() returns an empty string) by calling 
+`model.updateFilteredPersonList(person -> !person.getMeeting().toString().equals(""))`. <br>
+Step 2. Check if the filtered list is empty by calling `model.getFilteredPersonList().isEmpty()`. If it is empty, throw a CommandException to specify that there
+are no contacts with meetings found. <br>
+Step 3. Return the CommandResult with the corresponding message.
 
 The logic of the view meetings function follows the following activity diagram.
 
