@@ -28,4 +28,15 @@ Person *--> "0..1" Meeting
 Person *--> "0..1" Priority
 Person *--> "0..1" Remark
 Person : starred: Boolean
+Name : fullName: String
+Phone : value: String
+Email : value: String
+Address : value: String
+Company : value: String
+Meeting : desc: String
+Meeting : date: LocalDate
+Meeting : start: LocalTime
+Meeting : end: LocalTime
+Priority : value: String
+Remark : value: String
 @enduml
