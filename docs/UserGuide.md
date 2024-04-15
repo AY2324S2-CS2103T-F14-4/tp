@@ -294,7 +294,7 @@ Examples:
 * `co Betsy c/Google` adds the company attribute `Google` to the contact name `Betsy` in Connectify.
 * `co Alex c/` removes the company attribute from the contact name `Alex` in Connectify.
 
-### Locating persons by company : `findco`
+### Finding persons by company : `findco`
 
 Finds contacts whose company attribute exactly matches the specified keyword.
 
@@ -525,8 +525,8 @@ Action                                                                          
  [**Edit**](#editing-a-person-edit)                                            | `edit NAME [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit James n/James Lee e/jameslee@example.com`
  [**Find**](#finding-contacts-by-their-contact-names-find)                     | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
  [**Delete**](#deleting-a-person-delete)                                       | `delete NAME`<br> e.g., `delete John Doe`
- [**Add Company Tag**](#adding-a-company-tag-to-a-contact-co)                  | `co NAME c/COMPANY_NAME`<br> e.g., `co James Doe c/TikTok`
- [**Find by Company Tag**](#locating-persons-by-company-tag-findco)            | `findco COMPANY_NAME`<br> e.g., `findco TikTok`
+ [**Add Company attribute**](#adding-a-company-attribute-to-a-contact-co)                  | `co NAME c/COMPANY_NAME`<br> e.g., `co James Doe c/TikTok`
+ [**Find by Company**](#finding-persons-by-company-findco)            | `findco COMPANY_NAME`<br> e.g., `findco TikTok`
  [**Assign Priority**](#prioritising-a-contact-pr-priority-level)                | `pr/PRIORITY_LEVEL NAME`<br> e.g., `pr/high Alex Tan`
  [**Filter by Priority**](#filtering-contacts-by-priority-filter-priority-level) | `filter-PRIORITY_LEVEL`<br> e.g., `filter-high`
  [**Add Meeting**](#adding-a-meeting-to-a-person-mtg)                          | `mtg NAME m/MEETING_DESCRIPTION time/MEETING_TIME`<br> e.g., `mtg Alex Tan m/interview time/05-11-2024 0800-0930`
