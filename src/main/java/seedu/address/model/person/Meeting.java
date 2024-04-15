@@ -36,7 +36,7 @@ public class Meeting {
         if (desc.equals("") || date == null || start == null || end == null) {
             return "";
         }
-        String formattedDate = date.format(DateTimeFormatter.ofPattern("d MMMM yyyy"));
+        String formattedDate = date.format(DateTimeFormatter.ofPattern("d MMMM uuuu"));
         String formattedStart = start.format(DateTimeFormatter.ofPattern("HHmm"));
         String formattedEnd = end.format(DateTimeFormatter.ofPattern("HHmm"));
         return desc + ": " + formattedDate + " (" + formattedStart + " - " + formattedEnd + ")";

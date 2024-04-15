@@ -126,7 +126,7 @@ public class AddMeetingCommandTest {
         assertTrue(standardCommand.equals(standardCommand));
         // null -> returns false
         assertFalse(standardCommand.equals(null));
-        // different company tag -> returns false
+        // different meeting -> returns false
         assertFalse(standardCommand.equals(new AddMeetingCommand("Bob Tan",
                 new Meeting("Networking Event", "11-04-2024", "1400", "1600"))));
     }

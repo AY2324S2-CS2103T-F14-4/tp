@@ -1,0 +1,40 @@
+@startuml
+skin rose
+skinparam ActivityFontSize 15
+skinparam ArrowFontSize 12
+start
+:User executes company command;
+
+'Since the beta syntax does not support placing the condition outside the
+'diamond we place it as the true branch instead.
+
+if () then ([else])
+    :Check if contact exists in Connectify's data;
+        if () then ([contact exists])
+            :Check if company command is to remove or to add
+            (by whether company name specified is empty string);
+                if () then ([company command is to remove])
+                    :Check if contact has existing company
+                    attribute to remove;
+                        if () then ([contact has existing company attribute])
+                            :Set CommandResult message to be
+                            MESSAGE_DELETE_COMPANY_SUCCESS;
+                        else ([else])
+                            :Set CommandResult message to be
+                            MESSAGE_DELETE_COMPANY_FAILURE;
+                        endif
+                else ([else])
+                    :Set CommandResult message to be
+                    MESSAGE_ADD_COMPANY_SUCCESS;
+                endif
+                :Set contact Person to be the
+                new edited Person object;
+                :Update filteredPersonList to show all contacts;
+        else ([else])
+            :Throw contact does not exist CommandException;
+        endif
+else ([empty contact name specified])
+    :Throw empty name CommandException;
+endif
+stop
+@enduml

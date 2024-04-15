@@ -19,7 +19,7 @@ understanding of how to navigate and utilize Connectify's features effectively.
 
 Here is a brief overview of our key features:
 
-- Adding a company tag to a contact and finding contacts by their company tag
+- Adding a company attribute to a contact and finding contacts by their company
 - Setting priority levels for contacts and filtering contact by a certain priority level
 - Adding a meeting to a contact and viewing all meetings scheduled
 
@@ -27,7 +27,7 @@ With Connectify, networking becomes *easy, effective and efficient*.
 
 **Streamline Your Connections, Accelerate Your Success.**
 
-What are you waiting for? Download Connectify [here](https://github.com/AY2324S2-CS2103T-F14-4/tp/releases/tag/v1.3(final)) now, and **unlock your full networking potential**!
+What are you waiting for? Download Connectify [here](https://github.com/AY2324S2-CS2103T-F14-4/tp/releases/tag/v1.4) now, and **unlock your full networking potential**!
 
 --------------------------------------------------------------------------------------------------------------------
 ## How to use this guide
@@ -77,7 +77,7 @@ How to check?
    1. Open Command Prompt (for Windows) or Terminal (for MacOS).
    2. Type the command `java -version` to check the version of java installed on your computer. <br>
    It should look like this: <br>
-      ![checkJavaVersion](images/checkJavaVersion.png)
+      ![checkJavaVersion.png](images/checkJavaVersion.png)
    3. If your java version installed is java 11 or above, move on to the next step! Else, download java version 11 [here](https://www.oracle.com/sg/java/technologies/downloads/#java11),
    before continuing to the next step.
 
@@ -85,9 +85,17 @@ How to check?
 
 1. Copy the file to the folder you want to use as the _home folder_ for your Connectify application.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar connectify.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+1. Open a command terminal, `cd` into the folder you put the jar file in. `cd` stands for "change directory". 
+The `cd` command changes the current working directory to the specified directory. 
+
+1. Next, use the `java -jar connectify.jar` command to run the application.<br>
+   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br><br>
    ![Ui](images/Ui.png)
+
+
+
+
+
 
 1. Type the command in the command box and press 'Enter' on your keyboard to execute it. e.g. typing **`help`** and pressing 'Enter' will open the help window.<br>
    Some example commands you can try:
@@ -117,7 +125,7 @@ Attribute  | Description                                |  Required
 **Email** | Email of the contact                       | No   
 **Address**   | Address of the contact                     | No   
 **Tag**   | Categories to sort the contact under       | No
-**Company Tag**  | Company of the contact                     | No
+**Company**  | Company of the contact                     | No
 **Priority**  | Level of priority, from NONE, MED and HIGH | No  
 **Remark** | Note added to a contact                    | No
 **Meeting**  | Scheduled meeting with a contact with a specified date and time | No                                 
@@ -134,6 +142,8 @@ Attribute  | Description                                |  Required
 ## Contact Card View
 
 ![Contact Card View](images/ContactCardView.png)
+
+<div style="page-break-after: always;"></div>
 
 ## Features
 
@@ -201,6 +211,8 @@ Examples:
 * `add n/John Doe p/98765432 a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/recruiter e/betsycrowe@example.com a/Betsy street, block 456, #02-02 p/1234567`
 
+<div style="page-break-after: always;"></div>
+
 ### Listing all persons : `list`
 
 Shows a list of all contacts in Connectify.
@@ -244,9 +256,10 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 Examples:
 * `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br><br>
-
+* `find james betsy` returns `James Lee`, `Betsy Crowe`<br>
   ![result for 'find james betsy'](images/findJamesBetsyResult.png)
+
+<div style="page-break-after: always;"></div>
 
 ### Deleting a person : `delete`
 
@@ -260,7 +273,7 @@ Format: `delete NAME`
 Examples:
 * `delete Betsy` deletes the contact with the contact name `Betsy` in Connectify.
 
-### Adding a company tag to a contact : `co`
+### Adding a company attribute to a contact : `co`
 
 Tags the specified company name to the specified contact shown in the displayed contact list.
 
@@ -268,36 +281,38 @@ Format: `co NAME c/COMPANY_NAME`
 
 <box type="info" seamless>
 
-**Note:** Each contact is only allowed to have one company tag. If the contact already has an existing company tag, 
-the company tag will be updated to the new one and a message will inform you the previous and updated company tag.<br>
+**Note:** Each contact is only allowed to have one company attribute. If the contact already has an existing company attribute, 
+the company attribute will be updated to the new one and a message will inform you the previous and updated company.<br>
 </box>
 
-* Tags the company name to the person's contact. The specified `NAME` of the contact to add the company tag is 
+* Tags the company name to the person's contact. The specified `NAME` of the contact to add the company attribute is 
 case-insensitive. e.g `co John Doe c/TikTok` is the same as `co john doe c/TikTok`
 * Entering `co NAME c/`, leaving the `COMPANY_NAME` as empty, will remove the company 
 tag from a person's contact. <br>
-If the person's contact did not have a company tag and `co NAME c/` is entered, an error message will appear and the
+If the person's contact did not have a company attribute and `co NAME c/` is entered, an error message will appear and the
 person's contact will remain the same.
 
 
 Examples:
-* `co Betsy c/Google` adds the company tag `Google` to the contact name `Betsy` in Connectify.
-* `co Alex c/` removes the company tag from the contact name `Alex` in Connectify.
+* `co Betsy c/Google` adds the company attribute `Google` to the contact name `Betsy` in Connectify.
+* `co Alex c/` removes the company attribute from the contact name `Alex` in Connectify.
 
-### Locating persons by company tag : `findco`
+### Finding persons by company : `findco`
 
-Finds contacts whose company tag exactly matches the specified keyword.
+Finds contacts whose company attribute exactly matches the specified keyword.
 
 Format: `findco KEYWORD`
 
-* Finds contacts by the company tag. The specified `KEYWORD` is
+* Finds contacts by the company. The specified `KEYWORD` is
   case-insensitive. e.g `findco TikTok` is the same as `findco tiktok`
 * The specified keyword has to be exactly the same as the person's company 
-tag for the person to be found <br> e.g. the keyword `goog` will not match the company tag `google`
+tag for the person to be found <br> e.g. the keyword `goog` will not match the company `google`
 
 Examples:
-* `findco Google` returns `John Lim`, who has a company tag of `Google` in Connectify.<br>
+* `findco Google` returns `John Lim`, who has a company attribute of `Google` in Connectify.<br>
   ![result for 'findco Google'](images/findcoGoogle.png)
+
+<div style="page-break-after: always;"></div>
 
 ### Prioritising a contact : `pr/PRIORITY_LEVEL`
 
@@ -382,7 +397,7 @@ Adds the specified remark to the specified contact shown in the displayed contac
 
 Format: `remark NAME r/REMARK_DESCRIPTION`
 
-* The specified `NAME` of the contact to add the company tag is case-insensitive. <br>
+* The specified `NAME` of the contact to add the company attribute is case-insensitive. <br>
 e.g `remark John Doe r/met him at the career fair` is the 
 same as `remark john doe r/met him at the career fair`
 * Entering `remark NAME r/`, leaving the `REMARK_DESCRIPTION` as empty, will remove the remark
@@ -434,6 +449,8 @@ Clears all contacts from Connectify.
 
 Format: `clear`
 
+<div style="page-break-after: always;"></div>
+
 ### Exiting the program : `exit`
 
 Exits the program.
@@ -443,19 +460,19 @@ Format: `exit`
 ### Go to previous commands: Press Arrow Up button / Press Arrow Down button on your computer keyboard
 
 Suppose the commands entered are: 
-Command 1: list
-Command 2: edit John Doe n/John
-Command 3: edit Alex Yeoh p/23456789
+* Command 1: list
+* Command 2: edit John Doe n/John
+* Command 3: edit Alex Yeoh p/23456789
 
-After executing Command 3,  
-Pressing the arrow up button once will display: edit Alex Yeoh p/23456789
-Pressing the arrow up button again will display: edit John Doe n/John
-Pressing the arrow up button once more will display: list
-Further pressing the arrow up button will not change the command box content as it reaches the earliest command.
+After executing Command 1, 2 and 3 in order,  
+Pressing the `arrow up` button once will display: edit Alex Yeoh p/23456789 <br>
+Pressing the `arrow up` button again will display: edit John Doe n/John <br>
+Pressing the `arrow up` button once more will display: list <br>
+Further pressing the `arrow up` button will not change the command box content as it reaches the earliest command.
 
-After navigating up, pressing arrow down button once will display: edit John Doe n/John
-Pressing arrow down button again will display: edit Alex Yeoh p/23456789
-Further pressing the arrow down button will not change the command box content as it reaches the latest command.
+After navigating up, pressing `arrow down` button once will display: edit John Doe n/John <br>
+Pressing `arrow down` button again will display: edit Alex Yeoh p/23456789 <br>
+Further pressing the `arrow down` button will not change the command box content as it reaches the latest command.
 
 ### Saving the data
 
@@ -472,9 +489,6 @@ If your changes to the data file makes its format invalid, Connectify will disca
 Furthermore, certain edits can cause Connectify to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -497,12 +511,11 @@ _Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
+<div style="page-break-after: always;"></div>
+
 ## Known issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-
-
-<div style="page-break-after: always;"></div>
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -515,8 +528,8 @@ Action                                                                          
  [**Edit**](#editing-a-person-edit)                                            | `edit NAME [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit James n/James Lee e/jameslee@example.com`
  [**Find**](#finding-contacts-by-their-contact-names-find)                     | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
  [**Delete**](#deleting-a-person-delete)                                       | `delete NAME`<br> e.g., `delete John Doe`
- [**Add Company Tag**](#adding-a-company-tag-to-a-contact-co)                  | `co NAME c/COMPANY_NAME`<br> e.g., `co James Doe c/TikTok`
- [**Find by Company Tag**](#locating-persons-by-company-tag-findco)            | `findco COMPANY_NAME`<br> e.g., `findco TikTok`
+ [**Add Company attribute**](#adding-a-company-attribute-to-a-contact-co)                  | `co NAME c/COMPANY_NAME`<br> e.g., `co James Doe c/TikTok`
+ [**Find by Company**](#finding-persons-by-company-findco)            | `findco COMPANY_NAME`<br> e.g., `findco TikTok`
  [**Assign Priority**](#prioritising-a-contact-pr-priority-level)                | `pr/PRIORITY_LEVEL NAME`<br> e.g., `pr/high Alex Tan`
  [**Filter by Priority**](#filtering-contacts-by-priority-filter-priority-level) | `filter-PRIORITY_LEVEL`<br> e.g., `filter-high`
  [**Add Meeting**](#adding-a-meeting-to-a-person-mtg)                          | `mtg NAME m/MEETING_DESCRIPTION time/MEETING_TIME`<br> e.g., `mtg Alex Tan m/interview time/05-11-2024 0800-0930`
