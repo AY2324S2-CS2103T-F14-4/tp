@@ -1,0 +1,26 @@
+@startuml
+skin rose
+skinparam ActivityFontSize 15
+skinparam ArrowFontSize 12
+start
+:Input(contactName);
+:Search for Contact;
+if (Contact Found?) then ([yes])
+  if (input Remark empty) then ([false])
+    :Update Remark;
+    :Update Contact;
+    :Update Filtered List;
+  else ([true])
+    if (current Remark empty) is (false) then
+      :Update Remark;
+      :Update Contact;
+      :Update Filtered List;
+    else (true)
+      :Throw CommandException;
+    endif
+  endif
+else ([no])
+  :Throw CommandException;
+endif
+stop
+@enduml
