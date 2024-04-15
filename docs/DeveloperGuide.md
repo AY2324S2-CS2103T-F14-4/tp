@@ -24,7 +24,26 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 --------------------------------------------------------------------------------------------------------------------
 
+## **Contents**
+
+* [Design](#design)
+* [Implementation](#implementation)
+* [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
+* [Appendix A: Requirements](#appendix-a-requirements)
+* [Appendix B: Planned Enhancements](#appendix-b-planned-enhancements)
+* [Appendix C: Instructions for manual testing](#appendix-c-instructions-for-manual-testing)
+* [Appendix D: Effort](#appendix-d-effort)
+
+--------------------------------------------------------------------------------------------------------------------
+
 ## **Design**
+
+* [Architecture](#architecture)
+* [UI Component](#ui-component)
+* [Logic Component](#logic-component)
+* [Model Component](#model-component)
+* [Storage Component](#storage-component)
+* [Common classes](#common-classes)
 
 ### Architecture
 
@@ -157,8 +176,16 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 ## **Implementation**
 
-This section describes some noteworthy details on how certain features are implemented
+This section describes some noteworthy details on how certain features are implemented.
 
+* [Company feature](#company-feature)
+* [Find by company feature](#find-by-company-feature)
+* [Meeting feature](#meeting-feature)
+* [View meetings feature](#view-meetings-feature)
+* [Star feature](#star-feature)
+* [Add priority feature](#add-priority-feature)
+* [Filter by priority feature](#filter-by-priority-feature)
+* [Remark feature](#remark-feature)
 
 ### Company feature
 The company attribute is kept as a String and each Person has a company attribute, which is initialised as an empty String
