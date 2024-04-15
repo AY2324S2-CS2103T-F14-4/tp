@@ -29,10 +29,10 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 * [Design](#design)
 * [Implementation](#implementation)
 * [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
-* [Appendix A: Requirements](#appendix-requirements)
-* [Appendix B: Planned Enhancements](#appendix-planned-enhancements)
-* [Appendix C: Instructions for manual testing](#appendix-instructions-for-manual-testing)
-* [Appendix D: Effort](#appendix-effort)
+* [Appendix A: Requirements](#appendix-a-requirements)
+* [Appendix B: Planned Enhancements](#appendix-b-planned-enhancements)
+* [Appendix C: Instructions for manual testing](#appendix-c-instructions-for-manual-testing)
+* [Appendix D: Effort](#appendix-d-effort)
 
 --------------------------------------------------------------------------------------------------------------------
 
