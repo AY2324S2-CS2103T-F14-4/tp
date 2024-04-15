@@ -27,7 +27,7 @@ With Connectify, networking becomes *easy, effective and efficient*.
 
 **Streamline Your Connections, Accelerate Your Success.**
 
-What are you waiting for? Download Connectify [here](https://github.com/AY2324S2-CS2103T-F14-4/tp/releases/tag/v1.3(final)) now, and **unlock your full networking potential**!
+What are you waiting for? Download Connectify [here](https://github.com/AY2324S2-CS2103T-F14-4/tp/releases/tag/v1.4) now, and **unlock your full networking potential**!
 
 --------------------------------------------------------------------------------------------------------------------
 ## How to use this guide
@@ -457,19 +457,19 @@ Format: `exit`
 ### Go to previous commands: Press Arrow Up button / Press Arrow Down button on your computer keyboard
 
 Suppose the commands entered are: 
-Command 1: list
-Command 2: edit John Doe n/John
-Command 3: edit Alex Yeoh p/23456789
+* Command 1: list
+* Command 2: edit John Doe n/John
+* Command 3: edit Alex Yeoh p/23456789
 
-After executing Command 3,  
-Pressing the arrow up button once will display: edit Alex Yeoh p/23456789
-Pressing the arrow up button again will display: edit John Doe n/John
-Pressing the arrow up button once more will display: list
-Further pressing the arrow up button will not change the command box content as it reaches the earliest command.
+After executing Command 1, 2 and 3 in order,  
+Pressing the `arrow up` button once will display: edit Alex Yeoh p/23456789 <br>
+Pressing the `arrow up` button again will display: edit John Doe n/John <br>
+Pressing the `arrow up` button once more will display: list <br>
+Further pressing the `arrow up` button will not change the command box content as it reaches the earliest command.
 
-After navigating up, pressing arrow down button once will display: edit John Doe n/John
-Pressing arrow down button again will display: edit Alex Yeoh p/23456789
-Further pressing the arrow down button will not change the command box content as it reaches the latest command.
+After navigating up, pressing `arrow down` button once will display: edit John Doe n/John <br>
+Pressing `arrow down` button again will display: edit Alex Yeoh p/23456789 <br>
+Further pressing the `arrow down` button will not change the command box content as it reaches the latest command.
 
 ### Saving the data
 
