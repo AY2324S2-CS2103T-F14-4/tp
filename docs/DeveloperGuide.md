@@ -266,6 +266,86 @@ The logic of the view meetings function follows the following activity diagram.
 
 <puml src="diagrams/ViewMeetingsActivityDiagram.puml" width="574" />
 
+
+### Star Feature
+The implementation of the star feature allows users to star specific contacts in Connectify.
+
+#### 1. Command Structure:
+* The `StarCommand` class extends the abstract class `Command`.
+* It defines a `COMMAND_WORD` which is used to invoke this specific command.
+* The `MESSAGE_USAGE` constant provides information on how to use this command, including parameters and examples.
+
+#### 2. Execution:
+* When the execute method of `StarCommand` is called, it takes a `Model` object as a parameter, which represents the application's data model.
+* It searches for the contact specified by the user within the list of contacts retrieved from the model.
+* If the contact is not found, it throws a `CommandException`.
+* If the contact is already starred, it throws a `CommandException`.
+* If the contact is found and not already starred, it sets the `starred boolean` of the contact to `true` and updates the contact in the model.
+* Finally, it returns a `CommandResult` indicating the success of the operation.
+
+#### 3. Model Update:
+* Upon successfully starring the contact, the `starredContact` object is created with the updated information, including the `starred boolean`.
+* The model's `setPerson` method is called to update the contact with the new starred status.
+* The filtered person list is then updated to reflect the changes in the model.
+
+#### 4. Error Handling:
+
+* The implementation handles various error scenarios, such as contact not found or already starred, by throwing `CommandException` with appropriate error messages.
+
+#### Design Considerations:
+* Data Consistency: The implementation ensures that the model is updated consistently after starring a contact to maintain data integrity.
+* Scalability: Depending on the size of the contact list and frequency of use, the efficiency of searching for contacts might be a consideration for optimization.
+* Flexibility: The design allows for easy extension with additional functionalities related to starring contacts, such as unstarring.
+
+The diagram below shows the activity diagram for StarCommand.
+
+<puml src="diagrams/StarCommandActivityDiagram.puml" width="574" />
+
+### Add Priority Feature
+The add priority feature allows users to set a priority level of `high`, `med`, or `none`, which are the only priority
+levels accepted. Priority commands for each accepted priority level use different commands: `pr/high NAME`,
+.`pr/med NAME` and `pr/none NAME` for `high`, `med` and `none` priorities respectively.
+The `AddressBookParser` class identifies the command and creates 
+a new PriorityCommandParser instance for each command with the corresponding priority, which is 
+stored as a String. The parser constructs a PriorityCommand object with the specified priority level (`high`, `med`, 
+or an empty string for `none`) and the contact's name. The PriorityCommand handles potential errors then updates the 
+contact's priority in the model, as shown in the following activity diagram.
+
+<puml src="diagrams/AddPriorityActivityDiagram.puml" width="574" />
+
+The UI reflects these priorities through the use of colored dots next to contact names, where a the dot is red for 
+`high` priority, orange for `med`, and not visible for `none`.
+
+#### Design Considerations
+* Only priority levels of `high`, `med`, or `none` are accepted to simplify decision-making for the user. In the case 
+where too many priority levels are accepted, this would also dilute the importance of truly urgent contacts.
+* The `pr/none NAME` command functions as removing the priority level from a contact and also removes the indication 
+of a priority in the UI as it offers users greater consistency with other priority-related commands, making it 
+easier for users who can type fast as they can quickly adjust a contact's priority without changing their typing flow.
+
+### Filter by Priority Feature
+The filter by priority feature allows users to view a the contact list filtered by `high` priority or `med` priority.
+The filter by priority commands users can use are `filter-high` to view a list of `high` priority contacts and
+`filter-med` to view a list of `med` priority contacts. The `AddressBookParser` class identifies the command and creates
+an instance of FilterHighPriorityCommand and FilterMedPriorityCommand for `filter-high` and `filter-med` respectively.
+This command then interacts with the model to update the list of displayed contacts. It does this by invoking a method 
+that filters all contacts, checking if each contact's priority attribute matches the specified priority level. The 
+filtered list is then either displayed to the user if it contains any entries or a message is displayed indicating no 
+contacts were found with the specified priority. This is seen in the as shown in the following activity diagram.
+
+<puml src="diagrams/FilterHighPriorityActivityDiagram.puml" width="574" /> 
+
+for `filter-high` and 
+
+<puml src="diagrams/FilterMedPriorityActivityDiagram.puml" width="574" /> 
+
+for `filter-med`.
+
+#### Design Considerations
+A message is shown to the user in the case where no contacts meet the filter by priority criteria.
+The helps the user in understanding the result of the command without confusion, as users might otherwise 
+think the command does not work if an empty filtered list is shown without any message.  
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
@@ -359,44 +439,7 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
-### \[Proposed\] Data archiving
 
-_{Explain here how the data archiving feature will be implemented}_
-
-
-### Star Feature
-The implementation of the star feature allows users to star specific contacts in Connectify.
-
-#### 1. Command Structure:
-* The `StarCommand` class extends the abstract class `Command`.
-* It defines a `COMMAND_WORD` which is used to invoke this specific command.
-* The `MESSAGE_USAGE` constant provides information on how to use this command, including parameters and examples.
-
-#### 2. Execution:
-* When the execute method of `StarCommand` is called, it takes a `Model` object as a parameter, which represents the application's data model.
-* It searches for the contact specified by the user within the list of contacts retrieved from the model.
-* If the contact is not found, it throws a `CommandException`.
-* If the contact is already starred, it throws a `CommandException`.
-* If the contact is found and not already starred, it sets the `starred boolean` of the contact to `true` and updates the contact in the model.
-* Finally, it returns a `CommandResult` indicating the success of the operation.
-
-#### 3. Model Update:
-* Upon successfully starring the contact, the `starredContact` object is created with the updated information, including the `starred boolean`.
-* The model's `setPerson` method is called to update the contact with the new starred status.
-* The filtered person list is then updated to reflect the changes in the model.
-
-#### 4. Error Handling:
-
-* The implementation handles various error scenarios, such as contact not found or already starred, by throwing `CommandException` with appropriate error messages.
-
-#### Design Considerations:
-* Data Consistency: The implementation ensures that the model is updated consistently after starring a contact to maintain data integrity.
-* Scalability: Depending on the size of the contact list and frequency of use, the efficiency of searching for contacts might be a consideration for optimization.
-* Flexibility: The design allows for easy extension with additional functionalities related to starring contacts, such as unstarring.
-
-The diagram below shows the activity diagram for StarCommand.
-
-<puml src="diagrams/StarCommandActivityDiagram.puml" width="574" />
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -854,14 +897,6 @@ testers are expected to do more *exploratory* testing.
        Expected: The program will display "Invalid command format!
        findco: Finds all contacts with company tag containing the specified keywords (case-insensitive) and displays them as a list with index numbers.
        Parameters: KEYWORD [MORE_KEYWORDS]...".
-   
-### Saving data
-
-1. Dealing with missing/corrupted data files
-
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
-
-1. _{ more test cases …​ }_
 
 ### Prioritising a contact:
 1. Assign priority to a new contact.
@@ -888,15 +923,15 @@ testers are expected to do more *exploratory* testing.
        Expected: John Doe is assigned medium priority level, an orange circle appears instead of the red circle. Confirmation message displayed.
 
 ### Filtering contacts by priority:
-i. Prerequisites: Have contacts with different priority levels.
+1. Prerequisites: Have contacts with different priority levels.
 
-ii. Test case: `filter-high`<br>
+2. Test case: `filter-high`<br>
 Expected: List of contacts with high priority is displayed.
 
-iii. Test case: `filter-med`<br>
+3. Test case: `filter-med`<br>
 Expected: List of contacts with medium priority is displayed.
 
-iv. Test case: `filter-low`<br>
+4. Test case: `filter-low`<br>
 Expected: Error message indicating unknown command. No changes made.
 
 ### Adding a meeting to a person:
@@ -921,8 +956,19 @@ Expected: Error message indicating unknown command. No changes made.
    Expected: A meeting named "interview" with John Doe on 23rd March 2024 from 4 PM to 5 PM replaces the previous meeting.
 
 ### Viewing all contacts with meetings:
-i. Test case: `viewmtgs`<br>
-Expected: List of all contacts with scheduled meetings is displayed.
+1. View all contacts with meetings.
+
+   1. Prerequisites: Have contacts with meetings.
+
+   1. Test case: `viewmtgs`<br>
+   Expected: List of all contacts with scheduled meetings is displayed.
+
+2. No contact found with meetings.
+
+   1. Prerequisites: There is no meeting added to any existing contact.
+
+   1. Test case: `viewmtgs`<br>
+      Expected: Error message indicating that no contact found with meetings.
 
 ### Adding a remark to a person:
 
@@ -947,7 +993,7 @@ Expected: List of all contacts with scheduled meetings is displayed.
        Expected: Remark "Met at conference" replaces the previous remark for John Doe.
 
 ### Getting the number of contacts:
-i. Test case: `count`<br>
+1. Test case: `count`<br>
 Expected: Total number of contacts in Connectify is displayed.
 
 ### Starring a contact:
