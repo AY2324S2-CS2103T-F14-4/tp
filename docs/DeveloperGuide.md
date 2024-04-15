@@ -158,6 +158,39 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### Remark feature
+
+The remark attribute is kept as a String and each Person has a Remark attribute, which is 
+initialised as an empty String and only added on later to the contact with the 
+`remark NAME r/REMARK` command.
+
+
+Step 1. We will get the list of persons object representing the contacts in Connectify with `model.getFilteredPersonList()` and iterate
+through it to check for the contact in Connectify with the corresponding contactName. If we do not find a matching person,
+we throw a CommandException that the contact does not exist in Connectify. <br>
+Step 2. Check whether the RemarkCommand object's remark variable is an empty String. If it is, this means that it is a
+remove remark command. Otherwise, it is an add remark command.<br>
+Step 3. If it is a remove remark command, check whether the contact currently has an existing remark attribute. If there is
+currently no remark attribute, we set the message to be displayed as MESSAGE_DELETE_REMARK_FAILURE. Else, we set the message
+as MESSAGE_DELETE_REMARK_SUCCESS. <br>
+Step 4. If it is an add remark command, we set the message to be displayed as MESSAGE_ADD_REMARK_SUCCESS.<br>
+Step 5. Create a new updatedPerson Person object with the updated remark attribute. <br>
+Step 6. Set the Person personToEdit to the new updatedPerson Person object in the model, with `model.setPerson(personToEdit, editedPerson)`.<br>
+Step 7. Update the filteredPersonsList to display all contacts and the updated information by calling `model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS)`<br>
+Step 8. Return the CommandResult with the corresponding message.
+
+The following sequence diagram shows how an remark operation goes through the Logic component:
+
+<puml src="diagrams/RemarkSequenceDiagram.puml" alt="RemarkSequenceDiagram"/>
+
+The following activity diagram shows the process of RemarkCommand:
+
+<puml src="diagrams/RemarkCommandActivityDiagram.puml" alt="RemarkCommandActivityDiagram"/>
+
+The remark attribute is displayed in the contact card. We initialise it as visible=False in the PersonListCard.fxml file,
+and then set it as visible when the remark attribute is not an empty String in the PersonCard.java file in the UI component.
+This way there won't be awkward empty spaces in the contact card when the contact does not have a remark.
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
@@ -591,3 +624,36 @@ testers are expected to do more *exploratory* testing.
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases …​ }_
+
+--------------------------------------------------------------------------------------------------------------------
+
+## **Appendix: Effort**
+
+### Overview
+
+Connectify builds upon the foundation laid by AB3, an address book application that manages contact information. 
+It extends the functionality of AB3 by introducing new features, enhancing existing ones, 
+and addressing various challenges to improve user experience and productivity.
+
+### Difficulty and challenges
+
+As Connectify builds upon the existing structure of AB3, integrating new features into the original AB3 design 
+like company tags, priority assignment, meeting scheduling, and remark addition required careful design and 
+implementation to maintain system integrity and usability. 
+
+### Effort Required
+
+Effort was allocated across various phases including requirement analysis, design, implementation, testing, 
+and documentation. Extensive testing was performed to ensure the reliability and robustness of the application. 
+Additionally, user feedback was actively sought and incorporated to refine features and enhance usability.
+
+
+### Achievements
+
+Connectify added 11 new features to the existing features from AB3 and changed elements of the GUI.
+These new features include the those related to the attributes company, priority, meeting, remark, and star,
+as well as counting the number of contacts and retrieving the previously entered commands. 
+These improvements expanded the application's capabilities, making it more versatile and useful for users. 
+The addition of these features enhances productivity by providing users with tools to better organize 
+and manage their contacts and interactions.
+
