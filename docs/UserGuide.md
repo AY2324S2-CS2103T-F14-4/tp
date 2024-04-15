@@ -27,7 +27,7 @@ With Connectify, networking becomes *easy, effective and efficient*.
 
 **Streamline Your Connections, Accelerate Your Success.**
 
-What are you waiting for? Download Connectify [here](https://github.com/AY2324S2-CS2103T-F14-4/tp/releases/tag/v1.3(final)) now, and **unlock your full networking potential**!
+What are you waiting for? Download Connectify [here](https://github.com/AY2324S2-CS2103T-F14-4/tp/releases/tag/v1.4) now, and **unlock your full networking potential**!
 
 --------------------------------------------------------------------------------------------------------------------
 ## How to use this guide
@@ -297,7 +297,7 @@ Examples:
 * `co Betsy c/Google` adds the company attribute `Google` to the contact name `Betsy` in Connectify.
 * `co Alex c/` removes the company attribute from the contact name `Alex` in Connectify.
 
-### Locating persons by company : `findco`
+### Finding persons by company : `findco`
 
 Finds contacts whose company attribute exactly matches the specified keyword.
 
@@ -460,19 +460,19 @@ Format: `exit`
 ### Go to previous commands: Press Arrow Up button / Press Arrow Down button on your computer keyboard
 
 Suppose the commands entered are: 
-Command 1: list
-Command 2: edit John Doe n/John
-Command 3: edit Alex Yeoh p/23456789
+* Command 1: list
+* Command 2: edit John Doe n/John
+* Command 3: edit Alex Yeoh p/23456789
 
-After executing Command 3,  
-Pressing the arrow up button once will display: edit Alex Yeoh p/23456789
-Pressing the arrow up button again will display: edit John Doe n/John
-Pressing the arrow up button once more will display: list
-Further pressing the arrow up button will not change the command box content as it reaches the earliest command.
+After executing Command 1, 2 and 3 in order,  
+Pressing the `arrow up` button once will display: edit Alex Yeoh p/23456789 <br>
+Pressing the `arrow up` button again will display: edit John Doe n/John <br>
+Pressing the `arrow up` button once more will display: list <br>
+Further pressing the `arrow up` button will not change the command box content as it reaches the earliest command.
 
-After navigating up, pressing arrow down button once will display: edit John Doe n/John
-Pressing arrow down button again will display: edit Alex Yeoh p/23456789
-Further pressing the arrow down button will not change the command box content as it reaches the latest command.
+After navigating up, pressing `arrow down` button once will display: edit John Doe n/John <br>
+Pressing `arrow down` button again will display: edit Alex Yeoh p/23456789 <br>
+Further pressing the `arrow down` button will not change the command box content as it reaches the latest command.
 
 ### Saving the data
 
@@ -528,8 +528,8 @@ Action                                                                          
  [**Edit**](#editing-a-person-edit)                                            | `edit NAME [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit James n/James Lee e/jameslee@example.com`
  [**Find**](#finding-contacts-by-their-contact-names-find)                     | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
  [**Delete**](#deleting-a-person-delete)                                       | `delete NAME`<br> e.g., `delete John Doe`
- [**Add Company Tag**](#adding-a-company-tag-to-a-contact-co)                  | `co NAME c/COMPANY_NAME`<br> e.g., `co James Doe c/TikTok`
- [**Find by Company Tag**](#locating-persons-by-company-tag-findco)            | `findco COMPANY_NAME`<br> e.g., `findco TikTok`
+ [**Add Company attribute**](#adding-a-company-attribute-to-a-contact-co)                  | `co NAME c/COMPANY_NAME`<br> e.g., `co James Doe c/TikTok`
+ [**Find by Company**](#finding-persons-by-company-findco)            | `findco COMPANY_NAME`<br> e.g., `findco TikTok`
  [**Assign Priority**](#prioritising-a-contact-pr-priority-level)                | `pr/PRIORITY_LEVEL NAME`<br> e.g., `pr/high Alex Tan`
  [**Filter by Priority**](#filtering-contacts-by-priority-filter-priority-level) | `filter-PRIORITY_LEVEL`<br> e.g., `filter-high`
  [**Add Meeting**](#adding-a-meeting-to-a-person-mtg)                          | `mtg NAME m/MEETING_DESCRIPTION time/MEETING_TIME`<br> e.g., `mtg Alex Tan m/interview time/05-11-2024 0800-0930`
