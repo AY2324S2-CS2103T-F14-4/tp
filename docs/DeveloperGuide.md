@@ -392,7 +392,7 @@ This way there won't be awkward empty spaces in the contact card when the contac
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Requirements**
+## **Appendix A: Requirements**
 
 ### Product scope
 
@@ -407,8 +407,9 @@ This way there won't be awkward empty spaces in the contact card when the contac
 **Value proposition**: Tailored specifically for computing students, our team project, Connectify, optimises networking for future career opportunities. Connectify seamlessly organises contact details, efficiently manages professional relationships and simplifies event and meeting planning. Designed for seamless usage via Command Line Interface (CLI), Connectify’s ease of use sets up computing students for success.
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
-## **Appendix: Planned Enhancements**
+## **Appendix B: Planned Enhancements**
 Team size: 5
 
 1. **Change priority command format to be more consistent with the other commands.** <br>
@@ -449,6 +450,8 @@ Hence, in consideration of this, we plan to allow duplicate contact names if the
 In our current implementation of the features, error messages
 for incorrect command usage varies across different commands. Hence, we plan to modify error messages for incorrect command usage
 to ensure cohesiveness and consistency throughout the application, to provide more clarity to users.
+
+--------------------------------------------------------------------------------------------------------------------
 
 
 ### User stories
@@ -688,7 +691,7 @@ exists in Connectify already)
 * **Tags**: The users can classify different contacts as from different groupings
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Instructions for manual testing**
+## **Appendix C: Instructions for manual testing**
 
 Given below are instructions to test the app manually.
 
@@ -972,7 +975,7 @@ Expected: Total number of contacts in Connectify is displayed.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Effort**
+## **Appendix D: Effort**
 
 ### Overview
 
