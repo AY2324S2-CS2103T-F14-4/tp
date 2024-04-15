@@ -58,6 +58,7 @@
         "star-feature": "Star Feature",
         "add-priority-feature": "Add Priority Feature",
         "filter-by-priority-feature": "Filter by Priority Feature",
+        "remark-feature": "Remark feature",
         "documentation-logging-testing-configuration-dev-ops": "Documentation, logging, testing, configuration, dev-ops",
         "appendix-requirements": "Appendix: Requirements",
         "product-scope": "Product scope",
@@ -81,7 +82,12 @@
         "adding-a-remark-to-a-person": "Adding a remark to a person:",
         "getting-the-number-of-contacts": "Getting the number of contacts:",
         "starring-a-contact": "Starring a contact:",
-        "removing-the-star-from-a-contact": "Removing the star from a contact:"
+        "removing-the-star-from-a-contact": "Removing the star from a contact:",
+        "appendix-effort": "Appendix: Effort",
+        "overview": "Overview",
+        "difficulty-and-challenges": "Difficulty and challenges",
+        "effort-required": "Effort Required",
+        "achievements": "Achievements"
       },
       "headingKeywords": {}
     },
