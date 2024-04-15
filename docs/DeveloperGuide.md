@@ -301,6 +301,50 @@ The diagram below shows the activity diagram for StarCommand.
 
 <puml src="diagrams/StarCommandActivityDiagram.puml" width="574" />
 
+### Add Priority Feature
+The add priority feature allows users to set a priority level of `high`, `med`, or `none`, which are the only priority
+levels accepted. Priority commands for each accepted priority level use different commands: `pr/high NAME`,
+.`pr/med NAME` and `pr/none NAME` for `high`, `med` and `none` priorities respectively.
+The `AddressBookParser` class identifies the command and creates 
+a new PriorityCommandParser instance for each command with the corresponding priority, which is 
+stored as a String. The parser constructs a PriorityCommand object with the specified priority level (`high`, `med`, 
+or an empty string for `none`) and the contact's name. The PriorityCommand handles potential errors then updates the 
+contact's priority in the model, as shown in the following activity diagram.
+
+<puml src="diagrams/AddPriorityActivityDiagram.puml" width="574" />
+
+The UI reflects these priorities through the use of colored dots next to contact names, where a the dot is red for 
+`high` priority, orange for `med`, and not visible for `none`.
+
+#### Design Considerations
+* Only priority levels of `high`, `med`, or `none` are accepted to simplify decision-making for the user. In the case 
+where too many priority levels are accepted, this would also dilute the importance of truly urgent contacts.
+* The `pr/none NAME` command functions as removing the priority level from a contact and also removes the indication 
+of a priority in the UI as it offers users greater consistency with other priority-related commands, making it 
+easier for users who can type fast as they can quickly adjust a contact's priority without changing their typing flow.
+
+### Filter by Priority Feature
+The filter by priority feature allows users to view a the contact list filtered by `high` priority or `med` priority.
+The filter by priority commands users can use are `filter-high` to view a list of `high` priority contacts and
+`filter-med` to view a list of `med` priority contacts. The `AddressBookParser` class identifies the command and creates
+an instance of FilterHighPriorityCommand and FilterMedPriorityCommand for `filter-high` and `filter-med` respectively.
+This command then interacts with the model to update the list of displayed contacts. It does this by invoking a method 
+that filters all contacts, checking if each contact's priority attribute matches the specified priority level. The 
+filtered list is then either displayed to the user if it contains any entries or a message is displayed indicating no 
+contacts were found with the specified priority. This is seen in the as shown in the following activity diagram.
+
+<puml src="diagrams/FilterHighPriorityActivityDiagram.puml" width="574" /> 
+
+for `filter-high` and 
+
+<puml src="diagrams/FilterMedPriorityActivityDiagram.puml" width="574" /> 
+
+for `filter-med`.
+
+#### Design Considerations
+A message is shown to the user in the case where no contacts meet the filter by priority criteria.
+The helps the user in understanding the result of the command without confusion, as users might otherwise 
+think the command does not work if an empty filtered list is shown without any message.  
 
 ### \[Proposed\] Undo/redo feature
 
