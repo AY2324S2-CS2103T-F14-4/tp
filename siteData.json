@@ -56,6 +56,8 @@
         "meeting-feature": "Meeting feature",
         "view-meetings-feature": "View meetings feature",
         "star-feature": "Star Feature",
+        "add-priority-feature": "Add Priority Feature",
+        "filter-by-priority-feature": "Filter by Priority Feature",
         "proposed-undo-redo-feature": "[Proposed] Undo/redo feature",
         "documentation-logging-testing-configuration-dev-ops": "Documentation, logging, testing, configuration, dev-ops",
         "appendix-requirements": "Appendix: Requirements",

@@ -1,0 +1,16 @@
+@startuml
+skin rose
+skinparam ActivityFontSize 15
+skinparam ArrowFontSize 12
+start
+:User executes Filter High Priority command;
+
+:Update FilteredPersonList by whether
+the contact has a priority that is equal to high;
+if (is FilteredPersonList empty?) then ([no])
+    :Show the contacts with high priority;
+else ([yes])
+    :Show CommandResult of no contacts found;
+endif
+stop
+@enduml

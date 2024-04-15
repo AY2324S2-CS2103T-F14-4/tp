@@ -1,0 +1,19 @@
+@startuml
+skin rose
+skinparam ActivityFontSize 15
+skinparam ArrowFontSize 12
+start
+:User executes add priority command;
+if (contact exists?) then ([yes])
+  if (user wants to remove priority when contact has no existing priority) then ([no])
+    :Add priority to contact;
+    :Update Contact;
+    :Update Filtered List;
+  else ([yes])
+    :Throw delete priority failure CommandException;
+  endif
+else ([no])
+  :Throw empty name CommandException;
+endif
+stop
+@enduml
