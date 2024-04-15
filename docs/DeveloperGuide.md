@@ -965,9 +965,6 @@ Expected: Total number of contacts in Connectify is displayed.
 
     1. Prerequisites: Have a contact shown in the displayed contact list, and the contact is not starred.
 
-
-1. _{ more test cases …​ }_
-
     1. Test case: `unstar Jane Smith`<br>
        Expected: Error message indicating that the contact is not starred. No changes made.
 
